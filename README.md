@@ -6,5 +6,6 @@ By Pentagon
 Graph
 </h2>
 <p>
-Dijkstra - 20201102
+Dijkstra - 2020/11/02
+SCC
 </p>
