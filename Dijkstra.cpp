@@ -16,16 +16,14 @@ void Dijkstra(int s = 1)
     dis[s] = 0;
     pq.push(pii(0, s)); //Warning : weight first, node second
     while (!pq.empty()) {
-        auto t = pq.top();
-        pq.pop();
+        auto t = pq.top(); pq.pop();
         int x = t.fi, w = t.se;
-        if (w > dis[x])
-            continue;
+        if (w > dis[x]) continue;
         for (auto nt : g[x]) {
             int nx = nt.fi, nw = nt.se; //Warning : node first,weight second
             if (w + nw < dis[nx]) {
                 dis[nx] = w + nw;
-                pq.push(pii(w + nw, nx));
+                pq.push(pii(dis[nx], nx));
             }
         }
     }
