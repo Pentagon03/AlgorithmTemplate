@@ -1,6 +1,3 @@
-//Heavy Light Decomposition
-//https://www.acmicpc.net/problem/13510
-
 #include<bits/stdc++.h>
 using namespace std;
 using pii = pair<int,int>;
@@ -59,7 +56,7 @@ int query(int a,int b){
 		b=par[st];
 	}
 	if(dep[a]>dep[b]) swap(a,b);
-	ans = max(ans,f.query(in[a]+1,in[b]));
+	ans = op(ans,f.query(in[a]+1,in[b]));
 	return ans;
 }
 
