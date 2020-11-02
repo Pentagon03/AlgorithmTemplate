@@ -7,5 +7,5 @@ Graph
 </h2>
 <p>
 Dijkstra - 2020/11/02
-SCC
+SCC<br/>
 </p>
