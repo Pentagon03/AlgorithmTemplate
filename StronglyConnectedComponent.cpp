@@ -29,13 +29,14 @@ bool cmp(vector<int> a,vector<int> b){
 }
 int main(){
     ios::sync_with_stdio(false); cin.tie(0);
+    
     cin>>n>>m;
     while(m--){
-        int a,b;
-        cin>>a>>b;
+        int a,b; cin>>a>>b;      
         v[a].push_back(b);
         rev[b].push_back(a);
     }
+    
     for(int i=1;i<=n;i++)
         if(!vis[i])
             dfs(i);
@@ -52,7 +53,7 @@ int main(){
     for(vector<int>&t:scc) sort(all(t));
     sort(all(scc),cmp);
 
-    cout<<cnt<<'\n';
+    cout<<cnt<<nl;
     for(vector<int>&t:scc){
         for(int i:t)
             cout<<i<<sp;
