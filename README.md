@@ -2,5 +2,9 @@
 
 By Pentagon
 
-***Graph***<br />
+<h2>
+Graph
+</h2>
+<p>
 Dijkstra - 20201102
+</p>
