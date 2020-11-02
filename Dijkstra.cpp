@@ -9,11 +9,13 @@ const int N = 1e5 + 5, INF = 1e9;
 vector<pii>g[N];
 int dis[N];
 
-void Dijkstra(int s=1){
+void Dijkstra(int s=1)
+{
     priority_queue<pii,vector<pii>,greater<pii>> pq;
 	fill(dis,dis+N,INF);
 	dis[s]=0; pq.push(pii(0,s)); //Warning : weight first, node second
-	while(!pq.empty()){
+	while(!pq.empty())
+    {
         auto t = pq.top();  pq.pop();
         int x=t.fi,w=t.se;
         if(w>dis[x]) continue;
@@ -28,7 +30,8 @@ void Dijkstra(int s=1){
         }
 	}
 }
-int main(){
+int main()
+{
 	ios::sync_with_stdio(!cin.tie(0));
     int n,m;
     cin>>n>>m;
