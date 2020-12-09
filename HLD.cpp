@@ -3,6 +3,7 @@ using namespace std;
 using pii = pair<int,int>;
 #define fi first
 #define se second
+#define all(v) v.begin(,v.end()
 
 const int N = 1e5+5;
 int par[N],dep[N],sz[N],in[N],out[N],pv,top[N];
@@ -28,7 +29,8 @@ struct Seg{
 void dfs_sz(int v=1){
 	sz[v] = 1; 
 	dep[v] = dep[par[v]]+1;
-	for(auto&u:g[v]) if(u.fi!=par[v]){
+	if(par[u]) g[u].erase(find(all(g[u]),par[u]));
+	for(auto&u:g[v]){
 		par[u.fi]=v;
 		dfs_sz(u.fi);
 		sz[v]+=sz[u.fi];
@@ -40,7 +42,7 @@ void dfs_sz(int v=1){
 void dfs_hld(int v=1,int w=0){
 	in[v] = ++pv;
 	f.update(in[v],w);
-	for(auto u:g[v]) if(u.fi!=par[v]){
+	for(auto u:g[v]){
 		top[u.fi]= u.fi==g[v][0].fi?top[v]:u.fi;
 		dfs_hld(u.fi,u.se);
 	}
