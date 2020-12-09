@@ -29,7 +29,7 @@ struct Seg{
 void dfs_sz(int v=1){
 	sz[v] = 1; 
 	dep[v] = dep[par[v]]+1;
-	if(par[u]) g[u].erase(find(all(g[u]),par[u]));
+	if(par[v]) g[v].erase(find(all(g[v]),par[v]));
 	for(auto&u:g[v]){
 		par[u.fi]=v;
 		dfs_sz(u.fi);
