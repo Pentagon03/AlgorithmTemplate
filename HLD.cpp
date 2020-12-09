@@ -29,8 +29,9 @@ struct Seg{
 void dfs_sz(int v=1){
 	sz[v] = 1; 
 	dep[v] = dep[par[v]]+1;
-	if(par[v]) g[v].erase(find(all(g[v]),par[v]));
-	for(auto&u:g[v]){
+	if(g[v][0].fi==par[v])
+		swap(g[v][0],g[v].back());
+	for(auto&u:g[v])if(u.fi!=par[v]){
 		par[u.fi]=v;
 		dfs_sz(u.fi);
 		sz[v]+=sz[u.fi];
@@ -42,7 +43,7 @@ void dfs_sz(int v=1){
 void dfs_hld(int v=1,int w=0){
 	in[v] = ++pv;
 	f.update(in[v],w);
-	for(auto u:g[v]){
+	for(auto u:g[v])if(u.fi!=par[v]){
 		top[u.fi]= u.fi==g[v][0].fi?top[v]:u.fi;
 		dfs_hld(u.fi,u.se);
 	}
