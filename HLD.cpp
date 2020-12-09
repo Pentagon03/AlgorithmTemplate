@@ -3,7 +3,7 @@ using namespace std;
 using pii = pair<int,int>;
 #define fi first
 #define se second
-#define all(v) v.begin(,v.end()
+#define all(v) v.begin(),v.end()
 
 const int N = 1e5+5;
 int par[N],dep[N],sz[N],in[N],out[N],pv,top[N];
