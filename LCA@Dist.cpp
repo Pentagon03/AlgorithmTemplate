@@ -36,7 +36,7 @@ int LCA(int a,int b,int&dis){
 }
 
 int LCA(int a,int b){
-    int&t;
+    int t;
     return LCA(a,b,t);
 }
 
