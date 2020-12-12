@@ -35,6 +35,11 @@ int LCA(int a,int b,int&dis){
     return par[0][a];
 }
 
+int LCA(int a,int b){
+    int&t;
+    return LCA(a,b,t);
+}
+
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
     int n; cin>>n;
