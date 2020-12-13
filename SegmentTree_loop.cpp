@@ -6,19 +6,20 @@ struct Seg{
     int n;
     vector<T> t;
     Seg(int k=0):n(k){}
+    inline T op(T a,T b){return a+b;}
     void build(int n,vector<T>&a){
         this->n=n; t.resize(2*n,0);
         for(int i=0;i<n;i++) t[n+i]=a[i];
-        for(int i=n-1;i>=1;i--) t[i]=t[i<<1]+t[i<<1|1];
+        for(int i=n-1;i>=1;i--) t[i]=op(t[i<<1],t[i<<1|1]);
     }
     void update(int pos,T v){
-        for(t[pos+=n]=v;pos>1;pos>>=1) t[pos>>1]=t[pos]+t[pos^1];
+        for(t[pos+=n]=v;pos>1;pos>>=1) t[pos>>1]=op(t[pos],t[pos^1]);
     }
     T query(int l,int r){
         T res=0;
         for(l+=n,r+=n;l<=r;l>>=1,r>>=1){
-            if(l&1) res+=t[l++];
-            if(!(r&1)) res+=t[r--]; 
+            if(l&1) res=op(res,t[l++]);
+            if(!(r&1)) res=op(res,t[r--]); 
         }
         return res;
     }
