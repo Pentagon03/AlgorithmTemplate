@@ -2,13 +2,12 @@
 using namespace std;
 using pii = pair<int, int>;
 using ll = long long;
+const int N = 1e5 + 5, INF = 1e9;
+
 #define fi first
 #define se second
-
-const int N = 1e5 + 5, INF = 1e9;
 vector<pii> g[N];
 int dis[N];
-
 void Dijkstra(int s = 1)
 {
     priority_queue<pii, vector<pii>, greater<pii> > pq;
