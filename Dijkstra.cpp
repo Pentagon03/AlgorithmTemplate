@@ -16,10 +16,10 @@ void Dijkstra(int s = 1)
     pq.push(pii(0, s)); //Warning : weight first, node second
     while (!pq.empty()) {
         auto t = pq.top(); pq.pop();
-        int x = t.fi, w = t.se;
+        int w = t.fi, x = t.se;
         if (w > dis[x]) continue;
         for (auto nt : g[x]) {
-            int nx = nt.fi, nw = nt.se; //Warning : node first,weight second
+            int nw = nt.fi, nx = nt.se; //Warning : weight first, node second
             if (w + nw < dis[nx]) {
                 dis[nx] = w + nw;
                 pq.push(pii(dis[nx], nx));
@@ -35,8 +35,8 @@ int main()
     while (m--) {
         int a, b, w;
         cin >> a >> b >> w;
-        g[a].push_back(pii(b, w));
-        g[b].push_back(pii(a, w));
+        g[a].push_back(pii(w, b));
+        g[b].push_back(pii(w, a));
     }
     Dijkstra();
 }
