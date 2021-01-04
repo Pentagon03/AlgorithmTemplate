@@ -14,7 +14,7 @@ int FastPow(int x,int n=mod-2){
     return ans;
 }
 int nCr(int n,int r){
-    return fac[n]*FastPow(1LL*fac[r]*fac[r]%mod);
+    return 1LL*fac[n]*FastPow(1LL*fac[r]*fac[r]%mod)%mod;
 }
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
