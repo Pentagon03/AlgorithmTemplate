@@ -1,65 +1,67 @@
 #include<bits/stdc++.h>
-#define all(v) v.begin(),v.end()
 using namespace std;
-const int N = 3e5;
 using ll = long long;
-
-//Minimum Query, Range Sum update
+const int MXN = 1<<20;
 struct Seg{
-    int n,N;
-    vector<int> tree,lazy;
-    void init(int k){
-        n = k;
-        int N = 1 << int(ceil(log2(n)))+1;
-        tree.resize(N); lazy.resize(N); 
+    int st;
+    vector<ll> tree,lazy;
+    Seg(int k=MXN){
+        st = 1<<int(ceil(log2(k)));
+        tree=lazy=vector<ll>(st*2);
     }
-    void push(int nd,int st,int en){
-        tree[nd] += lazy[nd];
-        if(st!=en){
-            lazy[nd<<1] += lazy[nd];
-            lazy[nd<<1|1] += lazy[nd];
-        }
+    void build(){
+        for(int i=st-1;i>0;i--)
+            tree[i] = tree[i<<1] + tree[i<<1|1];
+    }
+    ll& elem(int k){
+        return tree[st+k];
+    }
+    // [l,r)
+    void apply(int nd,int s,int e,ll v){
+        lazy[nd] += v;
+        tree[nd] += (e-s)*v;
+    }
+    void push(int nd,int s,int e){
+        // s + 1 < e 인 경우만 들어온다. 
+        int mid = s + e >> 1;
+        apply(nd<<1,s,mid,lazy[nd]); apply(nd<<1|1,mid,e,lazy[nd]);
         lazy[nd] = 0;
     }
-    void update(int l,int r,int val,int nd,int st,int en){
-        push(nd,st,en);
-        if(r<st || en<l) return;
-        if(l<=st && en<=r){
-            lazy[nd] += val;
-            push(nd,st,en);
+    void upd(int l,int r,ll v){upd(l,r,v,1,0,st);}
+    ll qry(int l,int r){return qry(l,r,1,0,st);}
+    void upd(int l,int r,ll v,int nd,int s,int e){
+        if(l >= e or s >= r) return;
+        if(l <= s and e <= r){
+            apply(nd,s,e,v);
+            return;
         }
-        else{
-            int md = st + en >> 1;
-            update(l,r,val,nd<<1,st,md);
-            update(l,r,val,nd<<1|1,md+1,en);
-            tree[nd] = min(tree[nd<<1],tree[nd<<1|1]);
-        }
+        push(nd,s,e);
+        int mid = s + e >> 1;
+        upd(l,r,v,nd<<1,s,mid); upd(l,r,v,nd<<1|1,mid,e);
+        tree[nd] = tree[nd<<1] + tree[nd<<1|1];
     }
-    int query(int l,int r,int nd,int st,int en){
-        if(r<st||en<l) return 0;
-        push(nd,st,en);
-        if(l<=st && en<=r) return tree[nd];
-        else{
-            int md = st + en >> 1;
-            return min(query(l,r,nd<<1,st,md),query(l,r,nd<<1|1,md+1,en));
-        }
-    }
-    void upd(int l,int r,int val){
-        update(l,r,val,1,1,n);
-    }
-    int qry(int l,int r){
-        if(l>r) return 0;
-        return query(l,r,1,1,n);
+    ll qry(int l,int r,int nd,int s,int e){
+        if(l >= e or r <= s) return 0;
+        if(l <= s and e <= r) return tree[nd];
+        push(nd,s,e);
+        int mid = s + e >> 1;
+        return qry(l,r,nd<<1,s,mid)+qry(l,r,nd<<1|1,mid,e);
     }
 };
-
-void solve(){
-    int n; cin>>n;
-    Seg f;
-    f.init(n);
-}
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
-    solve();
-    return 0;
+    int n,m,k;
+    cin>>n>>m>>k; m+=k;
+    Seg ST(n); 
+	for (int i=0;i<n;i++)
+        cin>>ST.elem(i);
+    ST.build();
+    while(m--){
+        int sel,a,b; ll c; cin>>sel>>a>>b; --a;
+        if(sel==1)
+            cin>>c, ST.upd(a,b,c);
+		else
+            cout<<ST.qry(a,b)<<'\n';
+	}
+	return 0;
 }
