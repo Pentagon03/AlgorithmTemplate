@@ -24,6 +24,5 @@ inline int nCr(int n,int r){
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
     int n,r; cin>>n>>r;
-    
     cout<<nCr(n,r);
 }
