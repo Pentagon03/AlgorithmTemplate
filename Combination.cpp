@@ -19,8 +19,8 @@ inline int nCr(int n,int r){
             fac[i] = 1LL*fac[i-1]*i%mod;
         startup = 0;
     }
-    if(r<0) return 0;
-    return 1LL*fac[n]*FastPow(1LL*fac[r]*fac[r]%mod)%mod;
+    if(r<0||r>n) return 0;
+    return 1LL*fac[n]*FastPow(1LL*fac[r]*fac[n-r]%mod)%mod;
 }
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
