@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mod = 1e9+7;
-int startup=1,fac[1000001]={1};
+const int N = 1e6+5, mod = 1e9+7;
+int startup=1,fac[N]={1};
 inline int FastPow(int x,int n=mod-2){
-    if(x==1) return 1;
     int ans = 1;
     while(n>0){
         if(n&1)
@@ -16,7 +15,7 @@ inline int FastPow(int x,int n=mod-2){
 }
 inline int nCr(int n,int r){
     if(startup){
-        for(int i=1;i<=n;i++)
+        for(int i=1;i<N;i++)
             fac[i] = 1LL*fac[i-1]*i%mod;
         startup = 0;
     }
