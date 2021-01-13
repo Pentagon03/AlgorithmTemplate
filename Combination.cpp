@@ -4,6 +4,7 @@ using ll = long long;
 const int mod = 1e9+7;
 int startup=1,fac[1000001]={1};
 inline int FastPow(int x,int n=mod-2){
+    if(x==1) return 1;
     int ans = 1;
     while(n>0){
         if(n&1)
