@@ -2,24 +2,22 @@
 using namespace std;
 using pii = pair<int, int>;
 using ll = long long;
-const int N = 1e5 + 5, INF = 1e9;
+const int N = 1e5 + 5;
 
-#define fi first
-#define se second
 vector<pii> g[N];
 int dis[N];
 void Dijkstra(int s = 1)
 {
     priority_queue<pii, vector<pii>, greater<pii> > pq;
+    const int INF = 1e9;
     fill(dis, dis + N, INF);
-    dis[s] = 0;
-    pq.push(pii(0, s)); //Warning : weight first, node second
+    pq.push(pii(dis[s] = 0, s)); //Warning : weight first, node second
     while (!pq.empty()) {
         auto t = pq.top(); pq.pop();
-        int w = t.fi, x = t.se;
+        int w,x; tie(w,x) = t;
         if (w > dis[x]) continue;
         for (auto nt : g[x]) {
-            int nw = nt.fi, nx = nt.se; //Warning : weight first, node second
+            int nx,nw; tie(nx,nw) = nt; //Warning : node first, weight second
             if (w + nw < dis[nx]) {
                 dis[nx] = w + nw;
                 pq.push(pii(dis[nx], nx));
@@ -35,8 +33,8 @@ int main()
     while (m--) {
         int a, b, w;
         cin >> a >> b >> w;
-        g[a].push_back(pii(w, b));
-        g[b].push_back(pii(w, a));
+        g[a].push_back(pii(b, w));
+        g[b].push_back(pii(a, w));
     }
     Dijkstra();
 }
