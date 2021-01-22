@@ -1,4 +1,4 @@
-//Solution to "Count on a tree"
+//Solution to "https://www.acmicpc.net/problem/11932"
 #pragma GCC optimize("Ofast")
 #include<bits/stdc++.h>
 using namespace std;
@@ -26,6 +26,7 @@ void build(int id=1,int s=0,int e=rng){
 	build(L[id],s,m); build(R[id],m,e);
 }
 int upd(int p,int v,int id,int s,int e){
+	if(p<s||e<=p) return id;
 	int nid = ++pv;
 	L.pb(0); R.pb(0); tree.pb(0);
 	if(e-s<=1){
@@ -33,9 +34,8 @@ int upd(int p,int v,int id,int s,int e){
 		return nid;
 	}
 	int m = (0LL+s+e)/2;
-	L[nid] = L[id]; R[nid] = R[id]; 
-	if(p<m) L[nid] = upd(p,v,L[id],s,m);
-	else R[nid] = upd(p,v,R[id],m,e);
+	L[nid] = upd(p,v,L[id],s,m);
+   	R[nid] = upd(p,v,R[id],m,e);
 	tree[nid] = tree[L[nid]] + tree[R[nid]];
 	return nid;
 }
