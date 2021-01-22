@@ -10,6 +10,9 @@ using ll = long long;
 const int N = 1e5+5, lN = 17;
 int rng,root[2*N],pv;
 vector<int> L,R,tree;
+
+//must call it once
+//note that we can put large values on e
 void build(int id=1,int s=0,int e=rng){
 	L.pb(0); R.pb(0); tree.pb(0);
 	//if we don't need build
