@@ -1,4 +1,3 @@
-//Solution to "https://www.acmicpc.net/problem/11932"
 #pragma GCC optimize("Ofast")
 #include<bits/stdc++.h>
 using namespace std;
@@ -7,12 +6,11 @@ using ll = long long;
 #define nl '\n'
 #define prt(x) #x<<": "<<x<<nl
 #define pb push_back
-const int N = 1e5+5, lN = 17;
-int rng,root[2*N],pv;
-vector<int> L,R,tree;
 
-//must call it once
-//note that we can put large values on e
+const int N = 5e5+3;
+int rng,root[N],pv;
+vector<int> L,R,tree;
+//Need Initialization: set rng and call build() once
 void build(int id=1,int s=0,int e=rng){
 	L.pb(0); R.pb(0); tree.pb(0);
 	//if we don't need build
@@ -25,8 +23,8 @@ void build(int id=1,int s=0,int e=rng){
 	int m = (0LL+s+e)/2;
 	build(L[id],s,m); build(R[id],m,e);
 }
-int upd(int p,int v,int id,int s,int e){
-	if(p<s||e<=p) return id;
+int upd_new(int p,int v,int id,int s,int e){
+    if(p<s || e<=p) return id;
 	int nid = ++pv;
 	L.pb(0); R.pb(0); tree.pb(0);
 	if(e-s<=1){
@@ -34,81 +32,90 @@ int upd(int p,int v,int id,int s,int e){
 		return nid;
 	}
 	int m = (0LL+s+e)/2;
-	L[nid] = upd(p,v,L[id],s,m);
-   	R[nid] = upd(p,v,R[id],m,e);
+	L[nid] = upd_new(p,v,L[id],s,m);
+    R[nid] = upd_new(p,v,R[id],m,e);
 	tree[nid] = tree[L[nid]] + tree[R[nid]];
 	return nid;
 }
-void upd(int id,int p,int v){
-	root[id] = upd(p,v,root[id-1],0,rng);
+void upd_new(int id1,int id2,int p,int v){
+	root[id1] = upd_new(p,v,root[id2],0,rng);
 }
-int qry_sum(int l,int r,int id,int s=0,int e=rng){
-	if(r<s || e<l) return 0;
-	if(l<=s && e<=r) return tree[id];
+void upd_new(int id,int p,int v){
+	upd_new(id,id-1,p,v);
+}
+//Usually Don't Need This
+int upd_old(int p,int v,int id,int s=0,int e=rng){
+    if(p<s || e<=p) return id;
+	int nid = id;
+	if(id==0){
+		nid = ++pv;
+		L.pb(0); R.pb(0); tree.pb(0);
+	}
+	if(e-s<=1){
+		tree[nid] = tree[id] + v;
+		return nid;
+	}
 	int m = (0LL+s+e)/2;
-	int res = 0;
-	if(L[id]) res += qry_sum(l,r,L[id],s,m);
-	if(R[id]) res += qry_sum(l,r,R[id],m+1,e);
-	return res;
+	L[nid] = upd_old(p,v,L[id],s,m);
+    R[nid] = upd_old(p,v,R[id],m,e);
+	tree[nid] = tree[L[nid]] + tree[R[nid]];
+	return nid;
 }
-int qry_kth(int k,int id1,int id2,int idlca,int v,int s=0,int e=rng){
+bool isOn(int X,int bit){
+	return X & (1<<bit);
+}
+int qry_XorMax(int X,int idL,int idR,int bit,int s=0,int e=rng){
     if(e-s<=1) return s;
     int m = (0LL+s+e)/2;
-	int Lval = tree[L[id1]] + tree[L[id2]] - 2*tree[L[idlca]] + (s<=v && v<m);
-    if(Lval>=k) return qry_kth(k,L[id1],L[id2],L[idlca],v,s,m);
-    else return qry_kth(k-Lval,R[id1],R[id2],R[idlca],v,m,e);
-}
-
-int in[N],ID,par[N][lN],dep[N],val[N];
-vector<int> g[N];
-void dfs(int k=1,int p=0){
-    upd(in[k]=++ID,val[k],1);
-	dep[k] = dep[p]+1;
-    par[k][0] = p;
-    int pp = p, t = 1;
-    while(par[pp][t-1]){
-        pp = par[k][t] = par[pp][t-1];
-        ++t;
-    }
-	for(int nxt:g[k])if(nxt!=p){
-		dfs(nxt,k);
+	int Lval = tree[L[idR]] - tree[L[idL]];
+	int Rval = tree[R[idR]] - tree[R[idL]];
+	if(isOn(X,bit)){
+		if(Lval>0) return qry_XorMax(X,L[idL],L[idR],bit-1,s,m);
+		else return qry_XorMax(X,R[idL],R[idR],bit-1,m,e);
+	}else{
+		if(Rval>0) return qry_XorMax(X,R[idL],R[idR],bit-1,m,e);
+		else return qry_XorMax(X,L[idL],L[idR],bit-1,s,m);
 	}
-    upd(++ID,val[k],-1);
 }
-int LCA(int a,int b,int&dis){
-    if(dep[a]<dep[b]) swap(a,b);
-    int dif = dep[a] - dep[b];
-    dis = dif;
-    for(int i=0;dif;(dif>>=1),i++){
-        if(dif&1)
-            a = par[a][i];
-    }
-    if(a==b) return a;
-    for(int i=lN-1;i>=0;i--)
-        if(par[a][i]!=par[b][i])
-            a = par[a][i], b = par[b][i] , dis += (1<<i+1);
-    dis += 2;
-    return par[a][0];
+int qry_Sum(int l,int r,int idL,int idR,int s=0,int e=rng){
+	if(r<=s || e<=l) return 0;
+	if(l<=s && e<=r) return tree[idR] - tree[idL];
+	int m = (0LL+s+e)/2;
+	int res = 0;
+	if(L[idL] || L[idR]) res += qry_Sum(l,r,L[idL],L[idR],s,m);
+	if(R[idL] || R[idR]) res += qry_Sum(l,r,R[idL],R[idR],m,e);
+	return res;
 }
-int LCA(int a,int b){int t;return LCA(a,b,t);}
+int qry_Kth(int k,int idL,int idR,int s=0,int e=rng){
+    if(e-s<=1) return s;
+    int m = (0LL+s+e)/2;
+	int Lval = tree[L[idR]] - tree[L[idL]];
+    if(Lval>=k) return qry_Kth(k,L[idL],L[idR],s,m);
+    else return qry_Kth(k-Lval,R[idL],R[idR],m,e);
+}
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
-    int n,m; cin>>n>>m;
-    vector<int> t;
-	for(int i=1;i<=n;i++) cin>>val[i],t.push_back(val[i]);
-    sort(all(t)); t.erase(unique(all(t)),t.end());
-    for(int i=1;i<n;i++){
-        int a,b; cin>>a>>b;
-        g[a].push_back(b);
-        g[b].push_back(a);
-    }
-    for(int i=1;i<=n;i++) val[i] = lower_bound(all(t),val[i]) - t.begin();
-    rng = t.size();
-    build(); dfs(); 
-    while(m--){
-        int x,y,k; cin>>x>>y>>k;
-        int L = LCA(x,y); 
-        //cout<<prt(qry_kth(k,root[in[x]],root[in[y]],root[in[L]],val[L]));
-        cout<<t[qry_kth(k,root[in[x]],root[in[y]],root[in[L]],val[L])]<<'\n';
-    }
+    int Q; 
+	cin>>Q;
+	int n = 0;
+	rng = 1<<19; build();
+	while(Q--){
+		int t,x,l,r,k; cin>>t;
+		if(t==1){
+			cin>>x;
+			upd_new(++n,x,1);
+		}else if(t==2){
+			cin>>l>>r>>x;
+			cout<<qry_XorMax(x,root[l-1],root[r],18)<<nl;
+		}else if(t==3){
+			cin>>k;
+			n = n-k;
+		}else if(t==4){
+			cin>>l>>r>>x;
+			cout<<qry_Sum(0,x+1,root[l-1],root[r])<<nl;
+		}else if(t==5){
+			cin>>l>>r>>k;
+			cout<<qry_Kth(k,root[l-1],root[r])<<nl;
+		}
+	}
 }
