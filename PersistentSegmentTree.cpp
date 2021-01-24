@@ -10,7 +10,6 @@ using ll = long long;
 const int N = 5e5+3;
 int rng,root[N],pv;
 vector<int> L,R,tree;
-//Need Initialization: set rng and call build() once
 void build(int id=1,int s=0,int e=rng){
 	L.pb(0); R.pb(0); tree.pb(0);
 	//if we don't need build
@@ -44,7 +43,7 @@ void upd_new(int id,int p,int v){
 	upd_new(id,id-1,p,v);
 }
 //Usually Don't Need This
-int upd_old(int p,int v,int id,int s=0,int e=rng){
+int upd_old(int p,int v,int id,int s,int e){
     if(p<s || e<=p) return id;
 	int nid = id;
 	if(id==0){
@@ -60,6 +59,9 @@ int upd_old(int p,int v,int id,int s=0,int e=rng){
     R[nid] = upd_old(p,v,R[id],m,e);
 	tree[nid] = tree[L[nid]] + tree[R[nid]];
 	return nid;
+}
+void upd_old(int id,int p,int v){
+	upd_old(p,v,root[id],0,rng);
 }
 bool isOn(int X,int bit){
 	return X & (1<<bit);
@@ -77,13 +79,13 @@ int qry_XorMax(int X,int idL,int idR,int bit,int s=0,int e=rng){
 		else return qry_XorMax(X,L[idL],L[idR],bit-1,s,m);
 	}
 }
-int qry_Sum(int l,int r,int idL,int idR,int s=0,int e=rng){
+int qry_Sum(int l,int r,int id,int s=0,int e=rng){
 	if(r<=s || e<=l) return 0;
-	if(l<=s && e<=r) return tree[idR] - tree[idL];
+	if(l<=s && e<=r) return tree[id];
 	int m = (0LL+s+e)/2;
 	int res = 0;
-	if(L[idL] || L[idR]) res += qry_Sum(l,r,L[idL],L[idR],s,m);
-	if(R[idL] || R[idR]) res += qry_Sum(l,r,R[idL],R[idR],m,e);
+	if(L[id]) res += qry_Sum(l,r,L[id],s,m);
+	if(R[id]) res += qry_Sum(l,r,R[id],m,e);
 	return res;
 }
 int qry_Kth(int k,int idL,int idR,int s=0,int e=rng){
@@ -95,8 +97,7 @@ int qry_Kth(int k,int idL,int idR,int s=0,int e=rng){
 }
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
-    int Q; 
-	cin>>Q;
+    int Q; cin>>Q;
 	int n = 0;
 	rng = 1<<19; build();
 	while(Q--){
@@ -112,7 +113,7 @@ int main(){
 			n = n-k;
 		}else if(t==4){
 			cin>>l>>r>>x;
-			cout<<qry_Sum(0,x+1,root[l-1],root[r])<<nl;
+			cout<<qry_Sum(0,x+1,root[r])-qry_Sum(0,x+1,root[l-1])<<nl;
 		}else if(t==5){
 			cin>>l>>r>>k;
 			cout<<qry_Kth(k,root[l-1],root[r])<<nl;
