@@ -5,7 +5,7 @@ template<typename T=ll>
 struct Seg{
     int n;
     vector<T> t;
-    Seg(int k=0):n(k){}
+    Seg(int k=0):n(k),t(2*k){}
     inline T op(T a,T b){return a+b;}
     void build(int n,vector<T>&a){
         this->n=n; t.resize(2*n,0);
