@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-template<typename T>
+template<typename T=ll>
 struct Seg{
     int n;
     vector<T> t;
@@ -32,6 +32,6 @@ int main(){
         ll k; cin>>k;
         v.push_back(k);
     }
-    Seg<ll> ST;
+    Seg ST;
     ST.build(n,v);
 }
