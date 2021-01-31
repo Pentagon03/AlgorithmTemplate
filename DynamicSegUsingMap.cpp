@@ -1,3 +1,5 @@
+//Source: https://codeforces.com/blog/entry/60837
+
 #include <bits/stdc++.h>
  
 using namespace std;
