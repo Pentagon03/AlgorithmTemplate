@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-using pii = pair<int,int>;
 const int N = 1e5+10, lN = 16; // lN = floor(log2(N-1)) + 1
-int in[N],pv,par[N][lN],dep[N],val[N],sz[N];
-vector<pii> g[N];
+int in[N],pv,par[N][lN],dep[N],sz[N];
+vector<int> g[N];
 void dfs(int k=1,int p=0){
 	in[k] = pv++;
 	dep[k] = dep[p]+1;
@@ -15,7 +14,7 @@ void dfs(int k=1,int p=0){
         pp = par[k][t] = par[pp][t-1];
         ++t;
     }
-	for(auto[nxt,w]:g[k])if(nxt!=p){
+	for(auto nxt:g[k])if(nxt!=p){
 		dfs(nxt,k);
         sz[k] += sz[nxt];
 	}
@@ -42,7 +41,7 @@ int main(){
     ios::sync_with_stdio(!cin.tie(0));
     int n; cin>>n;
     for(int i=1;i<n;i++){
-        int a,b,c; cin>>a>>b>>c;
+        int a,b; cin>>a>>b;
         g[a].push_back(b); g[b].push_back(a);
     }
     dfs(1);
