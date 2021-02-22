@@ -29,7 +29,7 @@ int LCA(int a,int b,int&dis){
     dis += 2;
     return par[a][0];
 }
-int LCA(int a,int b){int t;return LCA(a,b,t);}=0){
+int LCA(int a,int b){int t;return LCA(a,b,t);}
 
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
