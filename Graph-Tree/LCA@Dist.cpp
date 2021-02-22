@@ -1,19 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int N = 1e5+10, lN = 16; // lN = floor(log2(N-1)) + 1
+const int N = 1e5+10, lN = 17; // lN = floor(log2(N-1)) + 1
 int in[N],pv,par[N][lN],dep[N],sz[N];
 vector<int> g[N];
 void dfs(int k=1,int p=0){
-	in[k] = pv++;
-	dep[k] = dep[p]+1;
-    sz[k] = 1;
-    par[k][0] = p;
-    int pp = p, t = 1;
-    while(par[pp][t-1]){
-        pp = par[k][t] = par[pp][t-1];
-        ++t;
-    }
+	in[k] = pv++; dep[k] = dep[p]+1; sz[k] = 1;
+	for(int i=1,pp =par[k][0]=p;i<lN && par[pp][i-1];i++)
+		pp = par[k][i] = par[pp][i-1];
 	for(auto nxt:g[k])if(nxt!=p){
 		dfs(nxt,k);
         sz[k] += sz[nxt];
