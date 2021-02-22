@@ -18,10 +18,9 @@ int LCA(int a,int b,int&dis){
     if(dep[a]<dep[b]) swap(a,b);
     int dif = dep[a] - dep[b];
     dis = dif;
-    for(int i=0;dif;(dif>>=1),i++){
+    for(int i=0;dif;(dif>>=1),i++)
         if(dif&1)
             a = par[a][i];
-    }
     if(a==b) return a;
     for(int i=lN-1;i>=0;i--)
         if(par[a][i]!=par[b][i])
