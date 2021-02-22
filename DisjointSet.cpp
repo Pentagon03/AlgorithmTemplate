@@ -3,28 +3,22 @@ using namespace std;
 using ll = long long;
 const int N = 1e5+10;
 
-int rt[N];
-void init(int n){
-    for(int i=1;i<=n;i++){
-        rt[i] = i;
-        //initialize size, vectors or smth
-    }
-}
-int find(int k){
-    if(k==rt[k]) return k;
-    return rt[k] = find(rt[k]);
-}
-void merge(int a,int b){
-    a = find(a); b = find(b);
-    if(a==b) return;
-    //random merge
-    if(a^b) rt[a] = b;
-    else rt[b] = a;
-}
+struct disjoint_set {
+	vector<int> par;
+	disjoint_set(int n=N) : par(n+1, -1) {}
+	void init(int n=N) {
+		fill(par.begin(), par.begin()+n+1, -1);
+	}
+	int find(int u) {
+		return par[u] < 0 ? u : par[u] = find(par[u]);
+	}
+	bool merge(int u, int v) {
+		u = find(u), v = find(v);
+		if (u == v) return false;
 
-int main(){
-    ios::sync_with_stdio(!cin.tie(0));
-    int n; cin>>n;
-    init(n);
-    
-}
+		if (par[u] > par[v]) swap(u, v);
+		par[u] += par[v];
+		par[v] = u;
+		return true;
+	}
+};
