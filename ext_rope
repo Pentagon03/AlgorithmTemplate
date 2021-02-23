@@ -1,0 +1,23 @@
+//https://www.acmicpc.net/problem/16994
+
+#include<ext/rope>
+using namespace __gnu_cxx;
+//erase(i,cnt)
+//insert(i,str)
+//append(str)
+//rp.at(i) == rp[i]
+void solve(){
+	rope<char> r;
+	string s; cin>>s;
+	r.append(s.c_str());
+	int n = sz(s);
+	int q; cin>>q;
+	while(q--){
+		int c,a,b; cin>>c;
+		switch(c){
+			case 1: cin>>a>>b; r = r.substr(a,b-a+1) + r.substr(0,a) + r.substr(b+1,n-b-1); break;
+			case 2: cin>>a>>b; r = r.substr(0,a) +  r.substr(b+1,n-b-1) + r.substr(a,b-a+1); break;
+			default: cin>>a; cout<<r.at(a)<<nl;
+		}
+	}
+}
