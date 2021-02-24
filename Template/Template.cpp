@@ -63,9 +63,9 @@ namespace in{
 namespace out{
     const int SIZ=1<<20;
 	char buf[SIZ],*p=buf,tmp[21];
-	inline void flush(){fwrite(buf,1,p-buf,stdout);}
+	inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
 	inline void write(char c){
-		if(p==buf+SIZ) flush(), p=buf;
+		if(p==buf+SIZ) flush();
 		*p++=c;
 	}
 	inline void write(const string&s,char sep = '\n'){
