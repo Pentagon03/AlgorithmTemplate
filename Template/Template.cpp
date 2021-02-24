@@ -32,6 +32,7 @@ template<typename T> T get_random_int(T l,T r) {
 	return uniform_int_distribution<T>(l,r)(rd);
 }
 
+//Don't use FASTIO when u are handling real numbers
 #define FASTIO 1
 #if FASTIO
 namespace in{
@@ -42,15 +43,15 @@ namespace in{
 		if(p==buf+SIZ) fread(buf,1,SIZ,stdin), p=buf;
 		return *p++;
 	}
+	inline void scan(char&c){do c=read(); while(isblank(c));}
     template<typename T=int>
 	inline T geti(){
-		char c; do c=read(); while(isblank(c));
+		char c; scan(c);
 		T res=0; bool f=1;
 		if(c=='-') f=0, c=read();
 		while(isdigit(c)) res=res*10+(c&15), c=read();
 		return f?res:-res;
 	}
-	inline void scan(char&c){c=read();}
 	inline void scan(string&s){
 		s.clear(); char c; do c=read(); while(isblank(c));
 		while(!isblank(c)) s.push_back(c), c=read();
@@ -69,7 +70,7 @@ namespace out{
 		*p++=c;
 	}
 	inline void write(const string&s,char sep = '\n'){
-		flush(); fwrite(s.c_str(),1,s.length(),stdout); 
+		flush(); fwrite(s.c_str(),1,s.length(),stdout);
 		if(sep) write(sep);
 	}
     template<typename T>
@@ -98,18 +99,6 @@ template<typename T, typename... Args> inline void scan(T&n, Args&...args){
 template<typename T>
 inline void mark(T ans,char sep = '\n'){cout<<ans<<sep;}
 #endif
-
-int TC = 1;
-bool getTC = 0, printTC = 0, useDouble = 0;
-const bool startup = [](){
-	// #define ONLINE_JUDGE
-	#ifdef ONLINE_JUDGE
-	ios::sync_with_stdio(false); cin.tie(0); 
-	#endif
-	if(getTC) cin>>TC;
-	if(useDouble) cout<<fixed<<setprecision(12);
-	return true;
-}();
 
 const int N = 1e5+5, inf = 1e9, mod = 1e9+7;
 // int n;
