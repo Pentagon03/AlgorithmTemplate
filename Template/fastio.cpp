@@ -16,6 +16,7 @@ namespace in{
 		while(isdigit(c)) res=res*10+(c&15), c=read();
 		return f?res:-res;
 	}
+	inline void scan(char&c){c=read();}
 	inline void scan(string&s){
 		s.clear(); char c; do c=read(); while(isblank(c));
 		while(!isblank(c)) s.push_back(c), c=read();
