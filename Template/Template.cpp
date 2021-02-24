@@ -37,7 +37,7 @@ template<typename T> T get_random_int(T l,T r) {
 namespace in{
     const int SIZ=1<<20;
 	char buf[SIZ],*p=buf+SIZ;
-	inline bool isblank(char c){return c=='\n'||c==' '||c=='\t'||c=='\r';}
+	inline bool isblank(char c){return c=='\n'||c==' '||c=='\t'||c=='\r'||c==0;}
 	inline char read(){
 		if(p==buf+SIZ) fread(buf,1,SIZ,stdin), p=buf;
 		return *p++;
