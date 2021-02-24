@@ -44,6 +44,6 @@ void multiply(const vector<T> &a,const vector<T> &b,vector<T> &res)
 		res[i] = T(fa[i].real()+(fa[i].real()>0?0.5:-0.5));
 		if(res[i]>0) SZ=i+1;
 	}
-	//res.resize(SZ); // use this for size opt
+	//res.resize(SZ); // Use this for size opt. min(SZ,N) can be an alternative
 }
 //출처: https://blog.myungwoo.kr/54 [PS 이야기]
