@@ -167,7 +167,7 @@ void multiply(const vector<int> &a,const vector<int> &b,vector<int> &res)
 {
     vector <base> fa(all(a)), fb(all(b));
     int n = 1;
-    while (n < max(sz(a),sz(b))) n <<= 1;
+    while (n < sz(a)+sz(b)-1) n <<= 1;
     //다항식을 제곱하는 경우 2*n까지 계수가 가능하다
     n <<= 1;
     fa.resize(n); fb.resize(n);
