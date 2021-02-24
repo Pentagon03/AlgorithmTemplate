@@ -26,7 +26,7 @@ void fft(vector <base> &a, bool invert)
         for (int i=0;i<n;i++) a[i] /= n;
     }
 }
-template<typename T=ll>
+template<typename T=int>
 void multiply(const vector<T> &a,const vector<T> &b,vector<T> &res)
 {
     vector <base> fa(all(a)), fb(all(b));
