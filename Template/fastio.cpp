@@ -36,7 +36,7 @@ namespace out{
 		*p++=c;
 	}
 	inline void write(const string&s,char sep = '\n'){
-		flush(); fwrite(s.c_str(),1,s.length(),stdout);
+		for(char c:s) write(c);
 		if(sep) write(sep);
 	}
     template<typename T>
