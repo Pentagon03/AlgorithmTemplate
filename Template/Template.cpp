@@ -53,7 +53,7 @@ namespace in{
 		return f?res:-res;
 	}
 	inline void scan(string&s){
-		s.clear(); char c; do c=read(); while(isblank(c));
+		s.clear(); char c; scan(c);
 		while(!isblank(c)) s.push_back(c), c=read();
 	}
     template<typename T> inline void scan(T&n){ n = geti<T>(); }
