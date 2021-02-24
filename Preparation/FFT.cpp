@@ -162,20 +162,19 @@ void fft(vector <base> &a, bool invert)
         for (int i=0;i<n;i++) a[i] /= n;
     }
 }
- 
-void multiply(const vector<int> &a,const vector<int> &b,vector<int> &res)
+template<typename T=int>
+void multiply(const vector<T> &a,const vector<T> &b,vector<T> &res)
 {
     vector <base> fa(all(a)), fb(all(b));
     int n = 1;
-    while (n < sz(a)+sz(b)-1) n <<= 1;
     //다항식을 제곱하는 경우 2*n까지 계수가 가능하다
-    n <<= 1;
+    while(n<sz(a)+sz(b)-1) n<<=1;
     fa.resize(n); fb.resize(n);
     fft(fa,false); fft(fb,false);
     for (int i=0;i<n;i++) fa[i] *= fb[i];
     fft(fa,true);
-    res.resize(n);
-    for (int i=0;i<n;i++) res[i] = int(fa[i].real()+(fa[i].real()>0?0.5:-0.5));
+    res.assign(n,0);
+    for (int i=0;i<n;i++) res[i] = T(fa[i].real()+(fa[i].real()>0?0.5:-0.5));
 }
 
 //출처: https://blog.myungwoo.kr/54 [PS 이야기]
