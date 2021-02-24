@@ -1,5 +1,6 @@
-typedef complex<double> base;
-#define M_PI 3.14159265358979323846
+typedef double RN;
+typedef complex<RN> base;
+const RN PI = acos(RN(-1));
 void fft(vector <base> &a, bool invert)
 {
     int n = sz(a);
@@ -10,7 +11,7 @@ void fft(vector <base> &a, bool invert)
         if (i < j) swap(a[i],a[j]);
     }
     for (int len=2;len<=n;len<<=1){
-        double ang = 2*M_PI/len*(invert?-1:1);
+        RN ang = 2*PI/len*(invert?-1:1);
         base wlen(cos(ang),sin(ang));
         for (int i=0;i<n;i+=len){
             base w(1);
@@ -43,5 +44,6 @@ void multiply(const vector<T> &a,const vector<T> &b,vector<T> &res)
 		res[i] = T(fa[i].real()+(fa[i].real()>0?0.5:-0.5));
 		if(res[i]>0) SZ=i+1;
 	}
-	res.resize(SZ);
+	//res.resize(SZ); // use this for size opt
 }
+//출처: https://blog.myungwoo.kr/54 [PS 이야기]
