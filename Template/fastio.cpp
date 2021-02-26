@@ -1,7 +1,7 @@
 //Don't use FASTIO when u are handling real numbers
-#define FASTIO 0
+#define FASTIO 1
 #if FASTIO
-namespace in{
+namespace IN{
 	const int SIZ=1<<20;
 	char buf[SIZ+1],*p=buf+SIZ;
 	inline bool isblank(char c){return c=='\n'||c==' '||c=='\t'||c=='\r'||c==0;}
@@ -27,7 +27,7 @@ namespace in{
 		scan(n); scan(args...);
 	}
 }
-namespace out{
+namespace OUT{
 	const int SIZ=1<<20;
 	char buf[SIZ+1],*p=buf,tmp[21];
 	inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
@@ -54,8 +54,8 @@ namespace out{
 	}
 	struct ff{ ~ff(){flush();}}flu;
 }
-using namespace in;
-using namespace out;
+using namespace IN;
+using namespace OUT;
 #else
 template<typename T=int> inline T geti(){T k; cin>>k; return k;}
 template<typename T> inline void scan(T&n){cin>>n;}
