@@ -25,7 +25,7 @@ void dfs(int v,int p,int len,vector<int>&t){
 }
 ll dnc(int v){
 	int cent = get_cent(v,-1,get_siz(v));
-	vector<int> t;
+	vector<int> t,reset;
 	ll ans = 0;
 	A[0] = 1;
 	for(auto[nxt,w]:g[cent]){
@@ -33,8 +33,9 @@ ll dnc(int v){
 		t.clear();
 		dfs(nxt,cent,w,t);
 		for(auto l:t) ans += A[k-l];
+		reset.insert(reset.end(),all(t));
 	}
-	for(auto l:t) A[l] = 0;
+	for(auto l:reset) A[l] = 0;
 	vis[cent] = 1;
 	for(auto[nxt,w]:g[cent]) if(!vis[nxt]) ans += dnc(nxt);
 	return ans;
