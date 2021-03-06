@@ -29,13 +29,11 @@ struct Seg{
 void dfs_sz(int v=1){
 	sz[v] = 1; 
 	dep[v] = dep[par[v]]+1;
-	if(g[v][0].fi==par[v])
-		swap(g[v][0],g[v].back());
 	for(auto&u:g[v])if(u.fi!=par[v]){
 		par[u.fi]=v;
 		dfs_sz(u.fi);
 		sz[v]+=sz[u.fi];
-		if(sz[u.fi] > sz[g[v][0].fi])
+		if(g[v][0].fi==par[v] || sz[u.fi]>sz[g[v][0].fi])
 			swap(u,g[v][0]);
 	}
 }
