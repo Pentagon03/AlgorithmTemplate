@@ -1,4 +1,4 @@
-//Don't use FASTIO when u are handling real numbers
+//Don't use FASTIO when useDouble==1 or printTC==1
 #define FASTIO 1
 #if FASTIO
 namespace IN{
@@ -31,26 +31,24 @@ namespace OUT{
 	const int SIZ=1<<20;
 	char buf[SIZ+1],*p=buf,tmp[21];
 	inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
-	inline void write(char c){
+	inline void mark(char c){
 		if(p==buf+SIZ) flush();
 		*p++=c;
 	}
-	inline void write(const string&s,char sep = '\n'){
-		for(char c:s) write(c);
-		if(sep) write(sep);
+	inline void mark(const string&s,char sep = '\n'){
+		for(char c:s) mark(c);
+		if(sep) mark(sep);
 	}
-	template<typename T>
-	inline void write(T ans,char sep = '\n'){
-		if(ans<0) write('-'),ans*=-1;
+	template<typename T> inline void mark(T ans,char sep = '\n'){
+		if(ans<0) mark('-'),ans*=-1;
 		int cnt=0;
 		do tmp[cnt++]=(ans%10)|48, ans/=10; while(ans>0);
-		for(;cnt--;) write(tmp[cnt]);
-		if(sep) write(sep);
+		for(;cnt--;) mark(tmp[cnt]);
+		if(sep) mark(sep);
 	}
-	template<typename T>
-	inline void write(const vector<T>&v){
-		for(auto k:v) write(k,' ');
-		write('\n');
+	template<typename T> inline void mark(const vector<T>&v){
+		for(auto k:v) mark(k,' ');
+		mark('\n');
 	}
 	struct ff{ ~ff(){flush();}}flu;
 }
@@ -63,5 +61,5 @@ template<typename T, typename... Args> inline void scan(T&n, Args&...args){
 scan(n); scan(args...);
 }
 template<typename T>
-inline void write(T ans,char sep = '\n'){cout<<ans<<sep;}
+inline void mark(T ans,char sep = '\n'){cout<<ans<<sep;}
 #endif
