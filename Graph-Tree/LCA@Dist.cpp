@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int N = 1e5+10, lN = 17; // lN = floor(log2(N-1)) + 1
+const int N = 1e5+10;
+const int lN = 17; // lN = floor(log2(N-1)) + 1
 int in[N],pv,par[N][lN],dep[N],sz[N];
 vector<int> g[N];
 void dfs(int k=1,int p=0){
