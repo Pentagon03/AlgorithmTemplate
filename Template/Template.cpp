@@ -49,7 +49,12 @@ template <typename T, typename... V>
 void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
 #define dbg(x...) cerr << "[" << #x << "] = ["; _print(x)
 
-//Don't use FASTIO when u are handling real numbers
+template<typename T> T get_random_int(T l,T r) {
+	static random_device rd;
+	return uniform_int_distribution<T>(l,r)(rd);
+}
+
+//Don't use FASTIO when useDouble==1 or printTC==1
 #define FASTIO 0
 #if FASTIO
 namespace IN{
@@ -82,26 +87,24 @@ namespace OUT{
 	const int SIZ=1<<20;
 	char buf[SIZ+1],*p=buf,tmp[21];
 	inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
-	inline void write(char c){
+	inline void mark(char c){
 		if(p==buf+SIZ) flush();
 		*p++=c;
 	}
-	inline void write(const string&s,char sep = '\n'){
-		for(char c:s) write(c);
-		if(sep) write(sep);
+	inline void mark(const string&s,char sep = '\n'){
+		for(char c:s) mark(c);
+		if(sep) mark(sep);
 	}
-	template<typename T>
-	inline void write(T ans,char sep = '\n'){
-		if(ans<0) write('-'),ans*=-1;
+	template<typename T> inline void mark(T ans,char sep = '\n'){
+		if(ans<0) mark('-'),ans*=-1;
 		int cnt=0;
 		do tmp[cnt++]=(ans%10)|48, ans/=10; while(ans>0);
-		for(;cnt--;) write(tmp[cnt]);
-		if(sep) write(sep);
+		for(;cnt--;) mark(tmp[cnt]);
+		if(sep) mark(sep);
 	}
-	template<typename T>
-	inline void write(const vector<T>&v){
-		for(auto k:v) write(k,' ');
-		write('\n');
+	template<typename T> inline void mark(const vector<T>&v){
+		for(auto k:v) mark(k,' ');
+		mark('\n');
 	}
 	struct ff{ ~ff(){flush();}}flu;
 }
@@ -114,19 +117,19 @@ template<typename T, typename... Args> inline void scan(T&n, Args&...args){
 scan(n); scan(args...);
 }
 template<typename T>
-inline void write(T ans,char sep = '\n'){cout<<ans<<sep;}
+inline void mark(T ans,char sep = '\n'){cout<<ans<<sep;}
 #endif
 
 int TC = 1;
 bool getTC = 0, printTC = 0, useDouble = 0, fileIO = 0;
 const bool startup = [](){
-	#define ONLINE_JUDGE
+	//#define ONLINE_JUDGE
 	#ifdef ONLINE_JUDGE
 	if(!FASTIO) ios::sync_with_stdio(!cin.tie(0)); 
 	#endif
 	if(fileIO) freopen("in.txt","r",stdin), 
 			   freopen("out.txt", "w", stdout);
-	if(getTC) cin>>TC;
+	if(getTC) scan(TC);
 	if(useDouble) cout<<fixed<<setprecision(12);
 	return true;
 }();
@@ -138,10 +141,10 @@ const bool startup = [](){
 // 	rep(i,n) cin>>v[i];
 // }
 
-const int N = 1e5+5, inf = 1e9, mod = 1e5+3;
+const int N = 1e4+5, inf = 1e9, mod = 1e5+3;
 
 void solve(){
-	int n,m,k; 
+	int n,m,k; cin>>n>>m>>k;
 }
 
 // did you initialize properly?
