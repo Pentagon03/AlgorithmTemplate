@@ -40,7 +40,7 @@ struct SegCon{
         return tree[nd] = f(init(nd<<1,s,m,v),init(nd<<1|1,m,e,v));
     } void init(vector<T>&v){ v.resize(b); init(1,0,b,v);}
 
-    void upd(int p,int v){
+    void upd(int p,T v){
         for(tree[p|=b]={v,v,v,v};p>1;p>>=1)
             tree[p>>1] = f(tree[p],tree[p^1]);
     } 
