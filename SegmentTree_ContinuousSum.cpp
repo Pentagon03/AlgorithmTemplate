@@ -25,6 +25,7 @@ struct SegCon{
         while(b<n) b <<= 1;
         tree.resize(b<<1);
     }
+    void reset(){ tree.assign(b<<1,Node());}
     Node f(Node a,Node b){
         Node res;
         res.sum = a.sum + b.sum;
@@ -40,9 +41,10 @@ struct SegCon{
         return tree[nd] = f(init(nd<<1,s,m,v),init(nd<<1|1,m,e,v));
     } void init(vector<T>&v){ v.resize(b); init(1,0,b,v);}
 
-    void upd(int p,T v){
-        for(tree[p|=b]=Node(v,v,v,v);p>1;p>>=1)
-            tree[p>>1] = f(tree[p],tree[p^1]);
+    void upd(int p,T plus){
+        T v = tree[p|=b].sum;  v += plus;
+        for(tree[p]=Node(v,v,v,v);p>>=1;)
+            tree[p] = f(tree[p<<1],tree[p<<1|1]);
     } 
 
     Node query(int nd,int s,int e,int l,int r){
@@ -52,6 +54,7 @@ struct SegCon{
         return f(query(nd<<1,s,m,l,r),query(nd<<1|1,m,e,l,r));
     } T query(int l,int r){return query(1,0,b,l,r).mx;}
 };
+
 
 void solve(int TC){
     int n; cin>>n;
