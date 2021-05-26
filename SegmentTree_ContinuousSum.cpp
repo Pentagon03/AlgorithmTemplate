@@ -42,7 +42,7 @@ struct SegCon{
     } void init(vector<T>&v){ v.resize(b); init(1,0,b,v);}
 
     void upd(int p,T plus){
-        T v = tree[p|=b].sum;  v += plus;
+        T v = tree[p+=b].sum;  v += plus;
         for(tree[p]=Node(v,v,v,v);p>>=1;)
             tree[p] = f(tree[p<<1],tree[p<<1|1]);
     } 
