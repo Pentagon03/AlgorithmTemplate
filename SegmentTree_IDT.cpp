@@ -12,10 +12,10 @@ struct Seg{
         for(int i=0;i<n;i++) t[n+i]=v[i];
         for(int i=n-1;i>=1;i--) t[i]=op(t[i<<1],t[i<<1|1]);
     }
-    void update(int pos,T v){
+    void upd(int pos,T v){
         for(t[pos+=n]=v;pos>>=1;) t[pos]=op(t[pos<<1],t[pos<<1|1]);
     }
-    T query(int l,int r){
+    T qry(int l,int r){
         T res=0;
         for(l+=n,r+=n;l<=r;l>>=1,r>>=1){
             if(l&1) res=op(res,t[l++]);
@@ -38,7 +38,7 @@ int main(){
     while(m--){
         ll a,b,c;
         cin>>a>>b>>c;
-        if(a==1) ST.update(b-1,c);
-        else cout<<ST.query(b-1,c-1)<<'\n';
+        if(a==1) ST.upd(b-1,c);
+        else cout<<ST.qry(b-1,c-1)<<'\n';
     }
 }
