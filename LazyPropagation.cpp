@@ -1,67 +1,56 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int MXN = 1<<20;
+
+template<typename T=ll>
 struct Seg{
-    int st;
-    vector<ll> tree,lazy;
-    Seg(int k=MXN){
-        st = 1<<int(ceil(log2(k)));
-        tree=lazy=vector<ll>(st*2);
+    int st=1; vector<T> tree,lazy;
+    Seg(int k=1){
+        while(st<k) st<<=1;
+        tree=lazy=vector<T>(st*2);
     }
-    void build(){
-        for(int i=st-1;i>0;i--)
-            tree[i] = tree[i<<1] + tree[i<<1|1];
+    inline T op(T a,T b){return a+b;}
+    T& elem(int k){return tree[st+k];}
+    void build(){for(int i=st-1;i>0;i--) tree[i] = op(tree[i<<1], tree[i<<1|1]);}
+    T init(int nd,int s,int e,vector<T>&v){
+        if(s==e) return tree[nd] = v[s-1];
+        return tree[nd] = op(init(nd<<1,s,s+e>>1,v),init(nd<<1|1,s+e+2>>1,e,v));
     }
-    ll& elem(int k){
-        return tree[st+k];
-    }
-    // [l,r)
-    void apply(int nd,int s,int e,ll v){
-        lazy[nd] += v;
-        tree[nd] += (e-s)*v;
+    void apply(int nd,int s,int e,T v){
+        lazy[nd] += v; tree[nd] += (e-s+1)*v;
     }
     void push(int nd,int s,int e){
-        // s + 1 < e 인 경우만 들어온다. 
-        int mid = s + e >> 1;
-        apply(nd<<1,s,mid,lazy[nd]); apply(nd<<1|1,mid,e,lazy[nd]);
+        if(s==e) return;
+        apply(nd<<1,s,s+e>>1,lazy[nd]); apply(nd<<1|1,s+e+2>>1,e,lazy[nd]);
         lazy[nd] = 0;
     }
-    void upd(int l,int r,ll v){upd(l,r,v,1,0,st);}
-    ll qry(int l,int r){return qry(l,r,1,0,st);}
-    void upd(int l,int r,ll v,int nd,int s,int e){
-        if(l >= e or s >= r) return;
-        if(l <= s and e <= r){
-            apply(nd,s,e,v);
-            return;
+    //md=0 : range update, md=1: query
+    T qry(int nd,int s,int e,int l,int r,int md,T v=0){
+        T res=0;
+        if(l <= s && e <= r){
+            if(md==0) apply(nd,s,e,v);
+            else res = tree[nd];
+        }else if(s <= r && l <= e){
+            push(nd,s,e);
+            T L = qry(nd<<1,s,s+e>>1,l,r,md,v), R = qry(nd<<1|1,s+e+2>>1,e,l,r,md,v);
+            if(md==0) tree[nd] = op(L,R);
+            else res = op(L,R);
         }
-        push(nd,s,e);
-        int mid = s + e >> 1;
-        upd(l,r,v,nd<<1,s,mid); upd(l,r,v,nd<<1|1,mid,e);
-        tree[nd] = tree[nd<<1] + tree[nd<<1|1];
-    }
-    ll qry(int l,int r,int nd,int s,int e){
-        if(l >= e or r <= s) return 0;
-        if(l <= s and e <= r) return tree[nd];
-        push(nd,s,e);
-        int mid = s + e >> 1;
-        return qry(l,r,nd<<1,s,mid)+qry(l,r,nd<<1|1,mid,e);
+        return md==0?tree[nd]:res;
     }
 };
+
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
     int n,m,k;
     cin>>n>>m>>k; m+=k;
-    Seg ST(n); 
-	for (int i=0;i<n;i++)
-        cin>>ST.elem(i);
-    ST.build();
+    Seg ST(n);  vector<ll> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    ST.init(1,1,n,v);
     while(m--){
-        int sel,a,b; ll c; cin>>sel>>a>>b; --a;
-        if(sel==1)
-            cin>>c, ST.upd(a,b,c);
-		else
-            cout<<ST.qry(a,b)<<'\n';
+        int sel,a,b; ll c; cin>>sel>>a>>b;
+        if(sel==1) cin>>c, ST.qry(1,1,n,a,b,0,c);
+		else cout<<ST.qry(1,1,n,a,b,1)<<'\n';
 	}
 	return 0;
 }
