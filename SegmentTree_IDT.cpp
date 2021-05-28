@@ -1,19 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
+
+//0 based
 template<typename T=ll>
 struct Seg{
-    int n;
-    vector<T> t;
-    Seg(int k=0):n(k),t(2*k){}
+    int n; vector<T> t;
+    Seg(int k=1):n(k){t.assign(2*n,0);}
     inline T op(T a,T b){return a+b;}
-    void build(int n,vector<T>&a){
-        this->n=n; t.resize(2*n,0);
-        for(int i=0;i<n;i++) t[n+i]=a[i];
+    void init(vector<T>&v){
+        for(int i=0;i<n;i++) t[n+i]=v[i];
         for(int i=n-1;i>=1;i--) t[i]=op(t[i<<1],t[i<<1|1]);
     }
     void update(int pos,T v){
-        for(t[pos+=n]=v;pos>1;pos>>=1) t[pos>>1]=op(t[pos],t[pos^1]);
+        for(t[pos+=n]=v;pos>>=1;) t[pos]=op(t[pos<<1],t[pos<<1|1]);
     }
     T query(int l,int r){
         T res=0;
@@ -24,6 +24,7 @@ struct Seg{
         return res;
     }
 };
+
 int main(){
     ios::sync_with_stdio(!cin.tie(0));
     int n,m,k; cin>>n>>m>>k;
@@ -32,6 +33,12 @@ int main(){
         ll k; cin>>k;
         v.push_back(k);
     }
-    Seg ST;
-    ST.build(n,v);
+    Seg ST(n); ST.init(v);
+    m+=k;
+    while(m--){
+        ll a,b,c;
+        cin>>a>>b>>c;
+        if(a==1) ST.update(b-1,c);
+        else cout<<ST.query(b-1,c-1)<<'\n';
+    }
 }
