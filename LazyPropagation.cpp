@@ -24,7 +24,7 @@ struct Seg{
         apply(nd<<1,s,s+e>>1,lazy[nd]); apply(nd<<1|1,s+e+2>>1,e,lazy[nd]);
         lazy[nd] = 0;
     }
-    //md=0 : range update, md=1: query
+    //md=0 : range update, md=1: range sum
     T qry(int nd,int s,int e,int l,int r,int md,T v=0){
         T res=0;
         if(l <= s && e <= r){
