@@ -9,6 +9,7 @@ struct Seg{
     Seg(int k=1):n(k){t.assign(2*n,T());}
     inline T op(T a,T b){return a+b;}
     void init(vector<T>&v){
+        n = v.size(); t.assign(2*n,T());
         for(int i=0;i<n;i++) t[n+i]=v[i];
         for(int i=n-1;i>=1;i--) t[i]=op(t[i<<1],t[i<<1|1]);
     }
