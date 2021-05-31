@@ -6,7 +6,7 @@ using ll = long long;
 template<typename T=ll>
 struct Seg{
     int n; vector<T> t;
-    Seg(int k=1):n(k){t.assign(2*n,0);}
+    Seg(int k=1):n(k){t.assign(2*n,T());}
     inline T op(T a,T b){return a+b;}
     void init(vector<T>&v){
         for(int i=0;i<n;i++) t[n+i]=v[i];
@@ -16,7 +16,7 @@ struct Seg{
         for(t[pos+=n]=v;pos>>=1;) t[pos]=op(t[pos<<1],t[pos<<1|1]);
     }
     T qry(int l,int r){
-        T res=0;
+        T res=T();
         for(l+=n,r+=n;l<=r;l>>=1,r>>=1){
             if(l&1) res=op(res,t[l++]);
             if(!(r&1)) res=op(res,t[r--]); 
