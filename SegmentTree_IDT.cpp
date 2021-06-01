@@ -1,7 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-using ll = long long;
-
 //0 based
 template<typename T=ll>
 struct Seg{
@@ -25,21 +21,3 @@ struct Seg{
         return res;
     }
 };
-
-int main(){
-    ios::sync_with_stdio(!cin.tie(0));
-    int n,m,k; cin>>n>>m>>k;
-    vector<ll> v;
-    for(int i=0;i<n;i++){
-        ll k; cin>>k;
-        v.push_back(k);
-    }
-    Seg ST(n); ST.init(v);
-    m+=k;
-    while(m--){
-        ll a,b,c;
-        cin>>a>>b>>c;
-        if(a==1) ST.upd(b-1,c);
-        else cout<<ST.qry(b-1,c-1)<<'\n';
-    }
-}
