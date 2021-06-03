@@ -1,7 +1,7 @@
 //first:val, second:id
 struct heap_set{
 	priority_queue<pii> iq,dq;
-	void insert(pii x){ iq.push(x); }
+	void push(pii x){ iq.push(x); }
 	void del(pii x){ dq.push(x); }
 	void upd(){
 		while(!dq.empty()){
@@ -14,6 +14,7 @@ struct heap_set{
 		}
 	}
 	bool empty(){upd(); return iq.empty();}
+	void pop(){if(!empty()) iq.pop();}
 	pii top(){
 		if(!empty()) return iq.top();
 		return pii(-1,-1);
