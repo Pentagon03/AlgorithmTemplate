@@ -26,10 +26,9 @@ void Dijkstra(int s = 1)
         }
     }
 }
-int main()
-{
-    ios::sync_with_stdio(!cin.tie(0));
-    int n, m;
+
+void solve(int TC = -1){
+     int n, m;
     cin >> n >> m;
     while (m--) {
         int a, b, w;
@@ -38,4 +37,9 @@ int main()
         g[b].push_back(pii(a, w));
     }
     Dijkstra();
+}
+int main()
+{
+    ios::sync_with_stdio(!cin.tie(0));
+    solve();
 }
