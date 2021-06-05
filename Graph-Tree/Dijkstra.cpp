@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-using pii = pair<int, int>;
 using ll = long long;
+
+using pii = pair<int, int>;
 const int N = 1e5 + 5;
 
 vector<pii> g[N];
