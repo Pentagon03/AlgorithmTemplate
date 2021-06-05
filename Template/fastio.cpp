@@ -35,10 +35,6 @@ namespace OUT{
 		if(p==buf+SIZ) flush();
 		*p++=c;
 	}
-	inline void mark(char*s,char sep = '\n'){
-		for(int i=0;s[i];i++) mark(s[i]);
-		if(sep) mark(sep);
-	}
 	inline void mark(const char*s,char sep = '\n'){
 		for(int i=0;s[i];i++) mark(s[i]);
 		if(sep) mark(sep);
