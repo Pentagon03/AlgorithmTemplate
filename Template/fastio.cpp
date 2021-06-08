@@ -27,6 +27,7 @@ namespace IN{
 		scan(n); scan(args...);
 	}
 }
+using namespace IN;
 namespace OUT{
 	const int SIZ=1<<20;
 	char buf[SIZ+1],*p=buf,tmp[21];
@@ -56,7 +57,6 @@ namespace OUT{
 	}
 	struct ff{ ~ff(){flush();}}flu;
 }
-using namespace IN;
 using namespace OUT;
 #else
 template<typename T=int> inline T geti(){T k; cin>>k; return k;}
