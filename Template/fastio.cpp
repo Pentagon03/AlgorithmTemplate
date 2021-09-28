@@ -1,4 +1,7 @@
-//Don't use FASTIO when useDouble==1 or printTC==1
+//int a=3; string b = "hello"; scan(a,b);
+//mark(a); // 3 + '\n'
+//mark(a,0); // 3
+
 #define FASTIO 1
 #if FASTIO
 namespace IN{
