@@ -1,23 +1,17 @@
-//https://www.acmicpc.net/problem/16994
-
 #include<ext/rope>
 using namespace __gnu_cxx;
-//erase(i,cnt)
-//insert(i,str)
-//append(str)
-//rp.at(i) == rp[i]
 void solve(){
 	rope<char> r;
 	string s; cin>>s;
-	r.append(s.c_str());
-	int n = sz(s);
-	int q; cin>>q;
-	while(q--){
-		int c,a,b; cin>>c;
-		switch(c){
-			case 1: cin>>a>>b; r = r.substr(a,b-a+1) + r.substr(0,a) + r.substr(b+1,n-b-1); break;
-			case 2: cin>>a>>b; r = r.substr(0,a) +  r.substr(b+1,n-b-1) + r.substr(a,b-a+1); break;
-			default: cin>>a; cout<<r.at(a)<<nl;
-		}
-	}
+	r.append(s.c_str()); // string to rope
+	/*
+	vector functions like push_back(), size(), empty() can be used
+	crope == rope<char> , can put normal char* string
+	insert(int x, crope r1): Inserts the contents of r1 before the xth element. Time Complexity: For Best Case: O(log N) and For Worst Case: O(N).
+	erase(int x, int l): Erases l elements, starting with the xth element. Time Complexity: O(log N).
+	substr(int x, int l): Returns a new rope whose elements are the l characters starting at the position x. Time Complexity: O(log N).
+	replace(int x, int l, crope r1): Replaces the l elements beginning with the xth element with the elements in r1. Time Complexity: O(log N).
+	concatenate(+): concatenate two ropes using the ‘+’ symbol. Time Complexity: O(1).
+	r[id] == r.at(id)
+	*/
 }
