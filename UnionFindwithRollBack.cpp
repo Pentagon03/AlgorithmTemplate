@@ -16,7 +16,7 @@ struct disjoint_set {
 	bool merge(int u, int v) {
 		u = find(u), v = find(v);
 		if (u == v) return false;
-		if (par[u] > par[v]) swap(u, v); //then sz[u] <= sz[v]
+		if (par[u] < par[v]) swap(u, v); //then sz[u] <= sz[v]
     S.push({u, v, par[u]});
 		par[v] += par[u];
 		par[u] = v;
