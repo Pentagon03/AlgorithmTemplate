@@ -1,4 +1,4 @@
-typedef double RN;
+typedef double RN; //long double
 typedef complex<RN> base;
 const RN PI = acos(RN(-1));
 void fft(vector <base> &a, bool invert)
@@ -23,6 +23,22 @@ void fft(vector <base> &a, bool invert)
             }
         }
     }
+    /* accurate version, but slow
+    for (int len=2;len<=n;len<<=1){
+		vector<base> w(len/2);
+		for(int i=0;i<len/2;i++){
+			RN ang = 2*PI*i/len*(invert?-1:1);
+			w[i] = base(cos(ang),sin(ang));
+		}
+        for (int i=0;i<n;i+=len){
+            for (int j=0;j<len/2;j++){
+                base u = a[i+j], v = a[i+j+len/2]*w[j];
+                a[i+j] = u+v;
+                a[i+j+len/2] = u-v;
+            }
+        }
+    }
+    */
     if (invert){
         for (int i=0;i<n;i++) a[i] /= n;
     }
