@@ -27,7 +27,7 @@ struct PST{
 		int nid = ++pv;
 		L.pb(0); R.pb(0); tree.pb(0);
 		if(e-s<=1){
-			tree[nid] += v;
+			tree[nid] = tree[id] + v;
 			return nid;
 		}
 		int m = (0LL+s+e)/2;
