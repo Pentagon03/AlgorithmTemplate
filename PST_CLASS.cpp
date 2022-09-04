@@ -1,16 +1,11 @@
-#define pb push_back
-const int N = 1e6+3, inf = 1e9;
-//PST
-int rng;
 struct PST{
 	vector<int> root,L,R,tree;
 	int pv = 0, init = 0;
-	PST(int n = N,int r = inf + 1) {
+	PST(int n = 0) {
 		root.resize(n+1);
-        rng = r;
 		build();
 	}
-	void build(int id=0,int s=0,int e=rng){
+	void build(int id=0,int s=0,int e=inf){
 		L.pb(0); R.pb(0); tree.pb(0);
 		//if we don't need build
 		if(!init) return;
@@ -23,7 +18,7 @@ struct PST{
 		int m = (0LL+s+e)/2;
 		build(L[id],s,m); build(R[id],m,e);
 	}
-	int upd_new(int p,int v,int id,int s,int e){
+	int upd_new(int p,int v,int id,int s=0,int e=inf){
 		if(p<s || e<=p) return id;
 		int nid = ++pv;
 		L.pb(0); R.pb(0); tree.pb(0);
@@ -37,11 +32,13 @@ struct PST{
 		tree[nid] = tree[L[nid]] + tree[R[nid]];
 		return nid;
 	}
-	void upd_root2(int id1,int id2,int p,int v,int s=0,int e=rng){
-		root[id1] = upd_new(p,v,root[id2],s,e);
+	int upd_root2(int t1, int t2 ,int p,int v,int s=0,int e=inf){
+		assert(0 <= t2 && t2 < t1 && t1 < root.size());
+		return root[t1] = upd_new(p,v,root[t2],s,e);
 	}
-	void upd_root(int id,int p,int v,int s=0,int e=rng){
-		upd_root2(id,id-1,p,v,s,e);
+	int upd_root(int p,int v,int s=0,int e=inf){
+		root.pb(upd_new(p,v,root.back(),s,e));
+		return root.back();
 	}
     int chg(int k){
         assert(0<=k && k<root.size());
@@ -50,7 +47,7 @@ struct PST{
 	bool isOn(int X,int bit){
 		return X & (1<<bit);
 	}
-	int qry_XorMax(int X,int idL,int idR,int bit,int s=0,int e=rng){
+	int qry_XorMax(int X,int idL,int idR,int bit,int s=0,int e=inf){
 		if(e-s<=1) return s;
 		int m = (0LL+s+e)/2;
 		int Lval = tree[L[idR]] - tree[L[idL]];
@@ -63,7 +60,7 @@ struct PST{
 			else return qry_XorMax(X,L[idL],L[idR],bit-1,s,m);
 		}
 	}
-	int qry_Sum(int l,int r,int id,int s=0,int e=rng){
+	int qry_Sum(int l,int r,int id,int s=0,int e=inf){
 		if(r<=s || e<=l) return 0;
 		if(l<=s && e<=r) return tree[id];
 		int m = (0LL+s+e)/2;
@@ -72,7 +69,7 @@ struct PST{
 		if(R[id]) res += qry_Sum(l,r,R[id],m,e);
 		return res;
 	}
-	int qry_Kth(int k,int idL,int idR,int s=0,int e=rng){
+	int qry_Kth(int k,int idL,int idR,int s=0,int e=inf){
 		if(e-s<=1) return s;
 		int m = (0LL+s+e)/2;
 		int Lval = tree[L[idR]] - tree[L[idL]];
