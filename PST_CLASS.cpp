@@ -1,3 +1,7 @@
+#define pb push_back
+const int inf = 1e9 + 1;
+
+//PST
 struct PST{
 	vector<int> root,L,R,tree;
 	int pv = 0, init = 0;
@@ -40,7 +44,7 @@ struct PST{
 		root.pb(upd_new(p,v,root.back(),s,e));
 		return root.back();
 	}
-    int chg(int k){
+	int chg(int k){
         assert(0<=k && k<root.size());
         return root[k];
     }
