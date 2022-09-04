@@ -45,9 +45,9 @@ struct PST{
 		return root.back();
 	}
 	int chg(int k){
-        assert(0<=k && k<root.size());
-        return root[k];
-    }
+		assert(0<=k && k<root.size());
+		return root[k];
+	}
 	bool isOn(int X,int bit){
 		return X & (1<<bit);
 	}
