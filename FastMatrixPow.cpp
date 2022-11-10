@@ -3,7 +3,7 @@ using namespace std;
 using ll = long long;
 using matrix = vector<vector<int>>;
 matrix fail = {{-1}};
-const int MOD = 1000;
+const int MOD = 1e9+7;
 template<typename T>
 void init(T&A,int r,int c){
 	A.resize(r);
@@ -17,9 +17,9 @@ T operator*(T A,T B){
 	for(int i=0;i<r1;i++) C[i].resize(c2);
 	for(int i=0;i<r1;i++)
 		for(int k=0;k<c1;k++){
-			const int tmp = A[i][k];
+			const ll tmp = A[i][k];
 			for(int j=0;j<c2;j++){
-				C[i][j] += tmp*B[k][j];
+				C[i][j] += tmp*B[k][j]%MOD;
 				C[i][j] %= MOD;
 			}
 		}
