@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-using matrix = vector<vector<int>>;
 using ll = long long;
+using matrix = vector<vector<int>>;
 matrix fail = {{-1}};
 const int MOD = 1000;
 template<typename T>
