@@ -11,10 +11,10 @@ int getLCSdp(string&A,string&B){
 	for(int i=0;i<siz;i++) dt[i] = 0;
 	for(int i=0;i<ALP;i++) for(int j=0;j<siz;j++) S[i][j] = 0;
 	
-	for(int i=0;i<m;i++) S[B[i]-'a'][i>>6]|=1ULL<<(i&63);
+	for(int i=0;i<m;i++) S[B[i]-'A'][i>>6]|=1ULL<<(i&63);
 	for(int i=0;i<n;i++){
 		for(int j=0, c=1, mc=0; j<siz;j++){
-			ull x = dt[j] | S[A[i]-'a'][j], y;
+			ull x = dt[j] | S[A[i]-'A'][j], y;
 			mc = _subborrow_u64(mc, x, (dt[j]<<1)|c, &y);
             c = dt[j] >> 63;
 			dt[j] = x & (x^y);
