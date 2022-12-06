@@ -3,7 +3,7 @@ const int ALP = 26;
 using ull = unsigned long long;
 ull dt[(MX>>6)+1], S[ALP][(MX>>6)+1];
 #include<immintrin.h>
-vector<int> getLCSdp(string&A,string&B){
+int getLCSdp(string&A,string&B){
 	int n=A.length(),m=B.length(),ans=0;
 	int siz = (m>>6)+1;
 
@@ -20,7 +20,6 @@ vector<int> getLCSdp(string&A,string&B){
 			dt[j] = x & (x^y);
 		}
 	}
-	vector<int> v(m+1);
-	rep(i,m) v[i+1] = v[i] + !!(dt[i>>6] & (1ULL<<(i&63)));
-	return v;
+	for(int i=0;i<siz;i++) ans += __builtin_popcountll(dt[i]);
+	return ans;
 }
