@@ -1,4 +1,3 @@
-string A, B;
 const int MX = 1e4 + 10;
 const int ALP = 26;
 using ull = unsigned long long;
@@ -21,7 +20,7 @@ vector<int> getLCSdp(string&A,string&B){
 			dt[j] = x & (x^y);
 		}
 	}
-    vector<int> v(m+1);
+	vector<int> v(m+1);
 	rep(i,m) v[i+1] = v[i] + !!(dt[i>>6] & (1ULL<<(i&63)));
 	return v;
 }
