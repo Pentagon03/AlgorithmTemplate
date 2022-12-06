@@ -1,4 +1,4 @@
-const int MX = 1e4 + 10;
+const int MX = 5e4 + 10;
 const int ALP = 26;
 using ull = unsigned long long;
 ull dt[(MX>>6)+1], S[ALP][(MX>>6)+1];
