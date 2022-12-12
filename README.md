@@ -16,4 +16,5 @@ Useful links
 </h2>
 <p>
 https://codeforces.com/blog/entry/57729
+https://github.com/justiceHui/icpc-teamnote
 </p>
