@@ -15,6 +15,6 @@ HLD - 2020/11/02
 Useful links
 </h2>
 <p>
-https://codeforces.com/blog/entry/57729
-https://github.com/justiceHui/icpc-teamnote
+https://codeforces.com/blog/entry/57729 <br/>
+https://github.com/justiceHui/icpc-teamnote <br/>
 </p>
