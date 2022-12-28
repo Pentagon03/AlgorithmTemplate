@@ -4,6 +4,7 @@
 
 #define FASTIO 1
 #if FASTIO
+//https://github.com/Pentagon03/AlgorithmTemplate/blob/main/Template/fastio.cpp
 constexpr int SIZ = 1<<18;
 class _IN{
     private:
