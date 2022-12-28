@@ -37,19 +37,10 @@ class _OUT{
 	    char buf[SIZ+1],*p=buf, tmp[21];
     public:
         inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
-        inline void mark(char c){
-            if(p==buf+SIZ) flush();
-            *p++=c;
-        }
-        inline void mark(const char*s){
-            for(int i=0;s[i];i++) mark(s[i]);
-        }
-        inline void mark(const string&s){
-            for(char c:s) mark(c);
-        }
-        template<typename T> inline void mark(const vector<T>&v){
-            for(auto k:v) mark(k), mark(' ');
-        }
+        inline void mark(char c){{if(p==buf+SIZ) flush();} *p++=c; }
+        inline void mark(const char*s){for(int i=0;s[i];i++) mark(s[i]); }
+        inline void mark(const string&s){for(char c:s) mark(c);}
+        template<typename T> inline void mark(const vector<T>&v){for(auto k:v) mark(k), mark(' ');}
         template<typename T> inline void mark(T ans){
             if(ans<0) mark('-'),ans*=-1;
             int cnt=0;
