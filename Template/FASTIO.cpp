@@ -23,6 +23,7 @@ class _IN{
             while(c>='0'&& c<='9') res=res*10+(c&15), c=read();
             return f?res:-res;
         }
+        template<typename T> inline void scan(vector<T>&v){for(auto&k:v) scan(k);}
         inline void scan(string&s){
             s.clear(); char c; scan(c);
             while(!isblank(c)) s.push_back(c), c=read();
