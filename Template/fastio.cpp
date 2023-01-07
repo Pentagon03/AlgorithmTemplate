@@ -4,6 +4,7 @@
  * Just use as if we use cin, cout. 
  * Or manually. ex) int a=3; string b = "hello"; _in.scan(a,b); int z = _in.geti();
  * Special function: vector, pair input/output => vector<int> v(3); cin>>v; // Works!
+ * Default floating point length is 6
  */
 #if FASTIO
 constexpr int SIZ = 1<<18;
