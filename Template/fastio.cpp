@@ -1,24 +1,3 @@
-#pragma GCC optimize("Ofast,unroll-loops")
-#include<bits/stdc++.h>
-using namespace std;
-#define nl '\n'
-#define sp ' '
-#define rep(i,n) for(int i=0;i<(n);i++)
-#define rep1(i,n) for(int i=1;i<=(n);i++)
-#define all(v) v.begin(),v.end()
-#define sz(v) ((int)(v).size())
-#ifndef ONLINE_JUDGE
-#define dbg(x) cerr<<#x<<": "<<x<<nl;
-#else
-#define dbg(x) NULL;
-#endif 
-#define IV(v,n) vector<int> v(n); for(auto&k:v) cin>>k
-using ll = long long;
-using pii = pair<int,int>;
-
-
-
-
 #define FASTIO 1
 /**
  * https://github.com/Pentagon03/AlgorithmTemplate/blob/main/Template/fastio.cpp
@@ -90,28 +69,3 @@ template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&k:v)
 template<typename T1,typename T2> ostream& operator<< (ostream&out, pair<T1,T2>&p){out<<p.first<<' '<<p.second; return out; }
 template<typename T> ostream& operator<< (ostream&out, vector<T> v){for(auto k:v) out<<k<<' '; return out; }
 #endif
-
-/**
- * https://howtoliveworldnice.tistory.com/697
-*/
-
-constexpr int N = 1e5+10, mod = 1e4+7;
-
-void solve(){
-    double x = 0.31312;
-    cout<<x;
-}
-
-
-int main(){
-    #if !FASTIO
-    cin.tie(0) -> sync_with_stdio(0);
-    // cout<<fixed<<setprecision(2);
-    #endif
-    int T = 1;
-    // cin >> T;
-    for(int i=1; i<=T; i++){
-        // cout<<"Case #"<<i<<": ";
-        solve();
-    }
-}
