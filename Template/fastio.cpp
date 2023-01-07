@@ -3,7 +3,7 @@
  * https://github.com/Pentagon03/AlgorithmTemplate/blob/main/Template/fastio.cpp
  * Just use as if we use cin, cout. 
  * Or manually. ex) int a=3; string b = "hello"; _in.scan(a,b);
- * Special function: vector input/output => vector<int> v(3); cin>>v; // Works!
+ * Special function: vector, pair input/output => vector<int> v(3); cin>>v; // Works!
  */
 #if FASTIO
 constexpr int SIZ = 1<<18;
@@ -25,6 +25,7 @@ class _IN{
             return f?res:-res;
         }
         template<typename T> inline void scan(vector<T>&v){for(auto&k:v) scan(k);}
+        template<typename T1,typename T2> inline void scan(pair<T1,T2>&p){scan(p.first);scan(p.second);}
         inline void scan(string&s){
             s.clear(); char c; scan(c);
             while(!isblank(c)) s.push_back(c), c=read();
@@ -43,6 +44,7 @@ class _OUT{
         inline void mark(const char*s){for(int i=0;s[i];i++) mark(s[i]); }
         inline void mark(const string&s){for(char c:s) mark(c);}
         template<typename T> inline void mark(const vector<T>&v){for(auto k:v) mark(k), mark(' ');}
+        template<typename T1,typename T2> inline void mark(const pair<T1,T2>&p){mark(p.first); mark(' '); mark(p.second); mark(' ');}
         template<typename T> inline void mark(T ans){
             if(ans<0) mark('-'),ans*=-1;
             int cnt=0;
@@ -57,5 +59,7 @@ template<typename T> _OUT& operator<< (_OUT&out, T i){out.mark(i); return out; }
 #define cout _out
 #else
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&k:v) in>>k; return in; }
-template<typename T> ostream& operator<< (ostream&out, vector<T> v){for(auto k:v) out<<k; return out; }
+template<typename T1,typename T2> istream& operator>> (istream&in, pair<T1,T2>&p){ in>>p.first>>p.second; return in; }
+template<typename T> ostream& operator<< (ostream&out, vector<T> v){for(auto k:v) out<<k<<' '; return out; }
+template<typename T1,typename T2> ostream& operator<< (ostream&out, pair<T1,T2>&p){out<<p.first<<' '<<p.second<<' '; return out; }
 #endif
