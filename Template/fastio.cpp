@@ -1,10 +1,11 @@
-// Just use as if we use cin.
-// Or...
-//int a=3; string b = "hello"; _in.scan(a,b);
-
 #define FASTIO 1
+/**
+ * https://github.com/Pentagon03/AlgorithmTemplate/blob/main/Template/fastio.cpp
+ * Just use as if we use cin, cout. 
+ * Or manually. ex) int a=3; string b = "hello"; _in.scan(a,b);
+ * Special function: vector input/output => vector<int> v(3); cin>>v; // Works!
+ */
 #if FASTIO
-//https://github.com/Pentagon03/AlgorithmTemplate/blob/main/Template/fastio.cpp
 constexpr int SIZ = 1<<18;
 class _IN{
     private:
@@ -54,6 +55,7 @@ template<typename T> _IN& operator>> (_IN&in, T&i){in.scan(i); return in; }
 template<typename T> _OUT& operator<< (_OUT&out, T i){out.mark(i); return out; }
 #define cin _in
 #define cout _out
-#define istream IN
-#define ostream OUT
+#else
+template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&k:v) in>>k; return in; }
+template<typename T> ostream& operator<< (ostream&out, vector<T> v){for(auto k:v) out<<k; return out; }
 #endif
