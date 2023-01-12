@@ -105,17 +105,17 @@ using C = double;
 const C EPS = 1e-12;
 const C PI = acos(-1);
 
-using P = pll;
+using P = pii;
 const P O = P(0,0);
 inline P operator*(P a,int c){ return P(a.fi*c,a.se*c); }
-inline ll operator*(P a,P b){ return a.fi*b.fi+a.se*b.se;}
-inline ll operator/(P a,P b){ return a.fi*b.se-a.se*b.fi;}
+inline ll operator*(P a,P b){ return ll(a.fi)*b.fi+ll(a.se)*b.se;}
+inline ll operator/(P a,P b){ return ll(a.fi)*b.se-ll(a.se)*b.fi;}
 inline P operator-(P a,P b){ return P(a.fi-b.fi, a.se-b.se);}
 inline P operator*=(P&a,int c){ return a = a*c; }
 inline P operator-=(P&a,P b){ return a = a-b; }
-inline ll sq(P a){return a.fi*a.fi+a.se*a.se;}
+inline ll sq(P a){return ll(a.fi)*a.fi+ll(a.se)*a.se;}
 inline ll dsq(P a,P b){return sq(b-a);}
-inline ll ccw(P a,P b,P c){ll val = (b-a)/(c-a); return val?(val>0?1:-1):0;}
+inline int ccw(P a,P b,P c){ll val = (b-a)/(c-a); return val?(val>0?1:-1):0;}
 inline bool cmp_ang(P a,P b){
     if((a>O) ^ (b>O)) return a>b;
     if(b/a != 0) return b/a > 0;
@@ -135,7 +135,7 @@ struct Line{
         }
         return t1*t2 <= 0 && t3*t4 <= 0;
     }
-    friend C dist(Line a,P x){ return ll(abs((a.e-a.s)/(x-a.s)))/a.length(); }
+    friend C dist(Line a,P x){ return abs((a.e-a.s)/(x-a.s))/a.length(); }
 };
 vector<P> getCH(vector<P>&pg){ //Monotone Chain of polygon
     if(sz(pg)<=3) return pg;
@@ -158,16 +158,16 @@ void solve(){
         vector<P> v(n); cin>>v;
         v = getCH(v);
         n = sz(v);
-        C ans = 1e9;
+        C ans = 1e18;
         for(int i=0;i<n;i++){
             Line t(v[i],v[(i+1)%n]);
             C mx = 0;
             for(int j=0;j<n;j++){
-                mx = max(mx, 100*dist(t,v[j]));
+                mx = max(mx, dist(t,v[j]));
             }
             ans = min(ans,mx);
         }
-        cout<<"Case "<<++tc<<": "<<ceil(ans)/100<<nl;
+        cout<<"Case "<<++tc<<": "<<ceil(100*ans)/100<<nl;
     }
 }
 
