@@ -163,11 +163,11 @@ void solve(){
             Line t(v[i],v[(i+1)%n]);
             C mx = 0;
             for(int j=0;j<n;j++){
-                mx = max(mx, dist(t,v[j]));
+                mx = max(mx, 100*dist(t,v[j]));
             }
             ans = min(ans,mx);
         }
-        cout<<"Case "<<++tc<<": "<<ceil(100*ans)/100<<nl;
+        cout<<"Case "<<++tc<<": "<<ceil(ans)/100<<nl;
     }
 }
 
