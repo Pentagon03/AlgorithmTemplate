@@ -3,8 +3,8 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(int i=0;i<(n);i++)
 #define rep1(i,n) for(int i=1;i<=(n);i++)
-#define repr(l,r) for(int i=(l);i<=(r);i++)
-#define repd(l,r) for(int i=(r);i>=(l);i--)
+#define repr(i,l,r) for(int i=(l);i<=(r);i++)
+#define repd(i,l,r) for(int i=(r);i>=(l);i--)
 void chk_range(int x,int l,int r){
     if(l>r) swap(l,r);
     assert(l<=x && x<=r);
