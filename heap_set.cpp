@@ -11,7 +11,7 @@ struct Data{
 };
 struct heap_set{
 	priority_queue<Data> iq,dq;
-	void push(Data x){ iq.push(x); }
+	void add(Data x){ iq.push(x); }
 	void del(Data x){ dq.push(x); }
 	void upd(){
 		while(!dq.empty()){
