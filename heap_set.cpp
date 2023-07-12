@@ -1,14 +1,15 @@
-//first:val, second:id
+//max set, first:val, second:id
 struct Data{
 	int val, id;
 	Data(int a=-1,int b=-1){val=a;id=b;}
 	bool operator<(const Data x) const{
-		return val>x.val;
+		return val<x.val; //change this to > for min set
 	}
 	bool operator==(const Data x) const{
 		return val==x.val;
 	}
 };
+const Data FAIL = Data();
 struct heap_set{
 	priority_queue<Data> iq,dq;
 	void add(Data x){ iq.push(x); }
@@ -25,8 +26,8 @@ struct heap_set{
 	}
 	bool empty(){upd(); return iq.empty();}
 	void pop(){if(!empty()) iq.pop();}
-	Data top(){
+	const Data top(){
 		if(!empty()) return iq.top();
-		return Data();
+		return FAIL;
 	}
 };
