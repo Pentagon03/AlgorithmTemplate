@@ -1,3 +1,4 @@
+//using pii = pair<int,int>;
 int get_random_int(int l,int r) {
     static random_device rd;
     return uniform_int_distribution<int>(l,r)(rd);
