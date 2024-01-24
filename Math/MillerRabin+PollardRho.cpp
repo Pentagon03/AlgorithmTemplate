@@ -67,6 +67,6 @@ vector<pair<ull,ull>> Factorize(ull n){
         v.emplace_back(p, cnt); if(n==1) break;
     }
     if(n>1) v.emplace_back(n,1);
-    sort(all(v));
+    sort(all(v)); // not required
     return v;
 }
