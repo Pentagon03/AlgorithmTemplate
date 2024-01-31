@@ -23,7 +23,7 @@ constexpr ll linf = (ll)4e18 + 7;
 
 // range addition update, range maximum query
 struct node{
-    ll mx, lzadd;
+    int mx, lzadd;
     node(int a=-inf,int b=0):mx(a), lzadd(b){}
     void apply(const node&p, int l, int r){
         // [l, r]
@@ -116,16 +116,10 @@ void solve(){
 
     sort(all(v));
     int ans = 0;
-    int i = 0;
-    while(i < n){
-        while(true){
-            f.upd(v[i].first, v[i].second, {0, -1});
-            if(i+1 == n or v[i+1].first != v[i].first)
-                break;
-            ++i;
-        }
-        ans = max(ans, C[v[i].first] + f.qry(0, size(coor)-1));
-        ++i;
+    for(int i=0;i<n;i++){
+        f.upd(v[i].first, v[i].second, {0, -1});
+        if(i+1 == n or v[i+1].first != v[i].first)
+            ans = max(ans, C[v[i].first] + f.t[1].mx);
     }
     cout<<ans<<nl;
 }
