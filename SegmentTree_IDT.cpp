@@ -15,7 +15,8 @@ struct Seg{
     T qry(int l,int r){
         T res=T();
         for(l+=n,r+=n;l<=r;l>>=1,r>>=1){
-            if(l&1) res=op(res,t[l++]);
+            // 교환법칙 성립하지 않을 경우 연산할 값을 모두 vector에 넣어서 한번에 처리해야 한다.
+            if(l&1) res=op(t[l++],res);
             if(!(r&1)) res=op(res,t[r--]); 
         }
         return res;
