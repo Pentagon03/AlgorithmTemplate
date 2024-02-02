@@ -1,4 +1,4 @@
-namespace Geometry{
+amespace Geometry{
     using C = double;
     const C EPS = 1e-12;
     const C PI = acos(-1);
@@ -9,6 +9,7 @@ namespace Geometry{
     const P O = P(0,0), FAIL = P(numeric_limits<T>::max(), numeric_limits<T>::max());
     inline T inner(P a,P b){ return a.fi*b.fi+ a.se*b.se;} //inner product
     inline T cross(P a,P b){ return a.fi*b.se-a.se*b.fi;} //vector product
+    istream& operator>> (istream& is, P& p){ return is >> p.fi >> p.se;}
     inline P operator+(P a,P b){ return P(a.fi+b.fi, a.se+b.se);}
     inline P operator-(P a,P b){ return P(a.fi-b.fi, a.se-b.se);}
     inline P operator*(int c,P a){ return P(a.fi*c,a.se*c); }
@@ -77,3 +78,5 @@ namespace Geometry{
         return true;
     }
 }
+
+using namespace Geometry;
