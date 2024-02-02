@@ -1,4 +1,4 @@
-namespace Gemoetry{
+namespace Geometry{
     using C = double;
     const C EPS = 1e-12;
     const C PI = acos(-1);
