@@ -52,17 +52,13 @@ struct lazyseg{
             pull(i);
     }
     void push(int i,int l,int r){
-        if(i < SZ){
-            int m = (l+r) / 2;
-            t[2*i].apply(t[i], l, m);
-            t[2*i+1].apply(t[i],m+1,r);
-            t[i] = {t[i].sum,1,0};
-        }
+        int m = (l+r) / 2;
+        t[2*i].apply(t[i], l, m);
+        t[2*i+1].apply(t[i],m+1,r);
+        t[i] = {t[i].sum,1,0};
     }
     void pull(int i){
-        if(i < SZ){
-            t[i].sum = (t[2*i].sum + t[2*i+1].sum) % mod;
-        }
+        t[i].sum = (t[2*i].sum + t[2*i+1].sum) % mod;
     }
     int x, y; node v;
     
