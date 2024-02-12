@@ -44,6 +44,9 @@ struct lazyseg{
                 lzadd += a; lzadd %= mod;
             }
         }
+        friend node operator+(node const&l, node const&r){;
+            return {(l.sum+r.sum)%mod, 1, 0};
+        }
     };
     vector<node> t;
     int SZ;
@@ -54,16 +57,13 @@ struct lazyseg{
     }
     void build(){
         for(int i=SZ-1;i>=1;i--)
-            pull(i);
+            t[i] = t[2*i] + t[2*i+1];
     }
     void push(int i,int l,int r){
         int m = (l+r) / 2;
         t[2*i].apply(t[i], l, m);
         t[2*i+1].apply(t[i],m+1,r);
         t[i] = {t[i].sum,1,0};
-    }
-    void pull(int i){
-        t[i].sum = (t[2*i].sum + t[2*i+1].sum) % mod;
     }
     int x, y; node v;
     
@@ -76,23 +76,23 @@ struct lazyseg{
         push(i, l, r);
         int m = (l+r) / 2;
         _upd(2*i, l, m); _upd(2*i+1, m+1, r);
-        pull(i);
+        t[i] = t[2*i] + t[2*i+1];
     }
     void upd(int _x,int _y,node const&_v){
         x = _x; y =_y; v = _v;
         _upd(1,0,SZ-1);
     }
 
-    T _qry(int i,int l,int r){
-        if(x > r or y < l) return 0;
-        if(x <= l and r <= y) return t[i].sum;
+    node _qry(int i,int l,int r){
+        if(x > r or y < l) return {0,1,0};
+        if(x <= l and r <= y) return t[i];
         push(i, l, r);
         int m = (l+r) / 2;
-        return (_qry(2*i,l,m) + _qry(2*i+1,m+1,r)) % mod;
+        return _qry(2*i,l,m) + _qry(2*i+1,m+1,r);
     }
     T qry(int _x,int _y){
         x = _x; y = _y;
-        return _qry(1, 0, SZ-1);
+        return _qry(1, 0, SZ-1).sum;
     }
 };
 
