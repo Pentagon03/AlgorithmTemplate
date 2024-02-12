@@ -27,6 +27,7 @@ constexpr ll linf = (ll)4e18 + 7;
 // Lazy Seg Start
 // ================================================================================
 
+// no mod
 template<typename T>
 struct lazyseg{
     struct node{
@@ -34,18 +35,18 @@ struct lazyseg{
         void apply(node const&p, int l,int r){
             auto m = p.lzmul;
             if(m != 1){
-                sum *= m; sum %= mod;
-                lzadd *= m; lzadd %= mod;
-                lzmul *= m; lzmul %= mod;
+                sum *= m;
+                lzadd *= m;
+                lzmul *= m;
             }
             auto a = p.lzadd;
             if(a != 0){
-                sum += a * (r-l+1) % mod; sum %= mod;
-                lzadd += a; lzadd %= mod;
+                sum += a * (r-l+1);
+                lzadd += a;
             }
         }
         friend node operator+(node const&l, node const&r){;
-            return {(l.sum+r.sum)%mod, 1, 0};
+            return {(l.sum+r.sum), 1, 0};
         }
     };
     vector<node> t;
