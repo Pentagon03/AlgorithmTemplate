@@ -22,6 +22,11 @@ using pii = pair<int,int>;
 int cur_tc;
 constexpr int N = 1e5 + 7, inf = (int)1e9 + 7, mod = (int)1e9 + 7;
 constexpr ll linf = (ll)4e18 + 7;
+
+
+// Lazy Seg Start
+// ================================================================================
+
 template<typename T>
 struct lazyseg{
     struct node{
@@ -114,6 +119,9 @@ void solve(){
         }
     }
 }
+
+//===========================================================================
+// Lazy Seg End
 
 signed main(){
     cin.tie(0)->sync_with_stdio(0);
