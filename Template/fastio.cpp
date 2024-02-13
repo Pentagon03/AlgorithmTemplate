@@ -7,20 +7,33 @@
  * Default floating point length is 6
  */
 #if FASTIO
-constexpr int SIZ = 1<<18;
+constexpr int SIZ = 1<<20;
 class _IN{
     private:
-	    char buf[SIZ+1],*p=buf+SIZ;
+	    char buf[SIZ+1],*p=buf;
+        int __END_FLAG__{}, __GETLINE_FLAG__{};
     public:
-        inline bool isblank(char c){return c=='\n'||c==' '||c=='\t'||c=='\r'||c==0;}
+        explicit operator bool(){return !__END_FLAG__;}
+        inline bool isEnd(char c){ return c == '\0';}
+        inline bool isBlank(char c){return c=='\n'||c==' '||c=='\t'||c=='\r';}
         inline char read(){
-            if(p==buf+SIZ) buf[fread(buf,1,SIZ,stdin)]=0, p=buf;
+            if(__END_FLAG__) return '\0';
+            if(isEnd(*p)) {
+                buf[fread(buf,sizeof(char),SIZ,stdin)] = 0; 
+                p = buf;
+                if(isEnd(*p)){
+                    return '\0';
+                }
+            };
             return *p++;
         }
-        inline void scan(char&c){do c=read(); while(isblank(c));}
+        inline void scan(char&c){
+            do c=read(); while(isBlank(c));
+            if(isEnd(c)) __END_FLAG__ = true;
+        }
         inline void scan(string&s){
             s.clear(); char c; scan(c);
-            while(!isblank(c)) s.push_back(c), c=read();
+            while(!isBlank(c) && !isEnd(c)) s.push_back(c), c=read();
         }
         inline void scan(float&f){string t; scan(t); f=stof(t);}
         inline void scan(double&f){string t; scan(t); f=stod(t);}
@@ -29,8 +42,14 @@ class _IN{
             char c; scan(c);
             T res=0; bool f=1;
             if(c=='-') f=0, c=read();
-            while(c>='0'&& c<='9') res=res*10+(c&15), c=read();
+            while(c>='0'&& c<='9') res=res*10+(c-'0'), c=read();
             return f?res:-res;
+        }
+        inline void getline(string&s){
+            s.clear(); char c = read();
+            for(;c!='\n' && !isEnd(c); c = read()) s.push_back(c);
+            if(__GETLINE_FLAG__) __END_FLAG__ = true;
+            if(isEnd(c)) __GETLINE_FLAG__ =  true;
         }
         template<typename T1,typename T2> inline void scan(pair<T1,T2>&p){scan(p.first);scan(p.second);}
         template<typename T> inline void scan(T&n){ n = geti<T>(); }
@@ -43,6 +62,7 @@ class _OUT{
     private:
 	    char buf[SIZ+1],*p=buf, tmp[21];
     public:
+        explicit operator bool(){return true;}
         inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
         inline void mark(const char c){{if(p==buf+SIZ) flush();} *p++=c; }
         inline void mark(const char*s){for(int i=0;s[i];i++) mark(s[i]); }
@@ -55,7 +75,7 @@ class _OUT{
         template<typename T> inline void mark(T ans){
             if(ans<0) mark('-'),ans*=-1;
             int cnt=0;
-            do tmp[cnt++]=(ans%10)|48, ans/=10; while(ans>0);
+            do tmp[cnt++]=(ans%10)+'0', ans/=10; while(ans>0);
             for(;cnt--;) mark(tmp[cnt]);
         }
         ~_OUT(){flush();}
@@ -64,9 +84,11 @@ template<typename T> _IN& operator>> (_IN&in, T&i){in.scan(i); return in; }
 template<typename T> _OUT& operator<< (_OUT&out, T i){out.mark(i); return out; }
 #define cin _in
 #define cout _out
+
 #else
 template<typename T1,typename T2> istream& operator>> (istream&in, pair<T1,T2>&p){ in>>p.first>>p.second; return in; }
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&k:v) in>>k; return in; }
 template<typename T1,typename T2> ostream& operator<< (ostream&out, pair<T1,T2>&p){out<<p.first<<' '<<p.second; return out; }
 template<typename T> ostream& operator<< (ostream&out, vector<T> v){for(auto k:v) out<<k<<' '; return out; }
+
 #endif
