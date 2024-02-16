@@ -53,6 +53,7 @@ namespace Geometry{
             return a + b*t;
         }
         friend C dist(Line a,P x){ return abs(cross(a.e-a.s,x-a.s))/a.length(); }
+        friend C dist_dir(Line a,P x){ return cross(a.e-a.s,x-a.s)/a.length(); }
     };
 
     using Polygon = vector<P>;
@@ -78,4 +79,4 @@ namespace Geometry{
         return true;
     }
 }
-using namespace Geometry;
+// using namespace Geometry;
