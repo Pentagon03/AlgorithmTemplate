@@ -26,11 +26,12 @@ namespace Geometry{
     struct Line{
         P s,e;
         Line(P a=O,P b=O):s(a),e(b){if(s>e) swap(s,e);}
+        friend istream& operator>> (istream& is, Line& l){ P a, b; cin>>a>>b; l = Line(a,b); return is;}
         C length(){return sqrt(dsq(s,e));}
         bool is_on_line(P x){return !ccw(s,e,x) && s<=x && x<=e;}
         friend bool chk_inter(Line a, Line b){
-            int t1 = ccw(a.s,a.e,b.s); int t2 =  ccw(a.s,a.e,b.e);
-            int t3 = ccw(b.s,b.e,a.s); int t4 =  ccw(b.s,b.e,a.e);
+            int t1 = ccw(a.s,b.s,b.e); int t2 =  ccw(a.e,b.s,b.e);
+            int t3 = ccw(b.s,a.s,a.e); int t4 =  ccw(b.e,a.s,a.e);
             if(!t1 && !t2){
                 // two lines are already sorted
                 return a.s <= b.e && b.s <= a.e;
@@ -39,7 +40,7 @@ namespace Geometry{
         }
         friend P parrallel_inter(Line a,Line b){
             if(a.e==b.s) return a.e;
-            if(b.e==a.s) return b.e;
+            if(a.s==b.e) return a.s;
             return FAIL;
         }
         // only works when T = double
@@ -79,4 +80,4 @@ namespace Geometry{
         return true;
     }
 }
-// using namespace Geometry;
+using namespace Geometry;
