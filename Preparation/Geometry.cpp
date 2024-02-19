@@ -28,6 +28,7 @@ namespace Geometry{
         Line(P a=O,P b=O):s(a),e(b){if(s>e) swap(s,e);}
         friend istream& operator>> (istream& is, Line& l){ P a, b; cin>>a>>b; l = Line(a,b); return is;}
         C length(){return sqrt(dsq(s,e));}
+        T sq_length(){return dsq(s,e);}
         bool is_on_line(P x){return !ccw(s,e,x) && s<=x && x<=e;}
         friend bool chk_inter(Line a, Line b){
             int t1 = ccw(a.s,b.s,b.e); int t2 =  ccw(a.e,b.s,b.e);
@@ -71,7 +72,7 @@ namespace Geometry{
         dn.insert(dn.end(),++up.rbegin(),--up.rend());
         return dn;
     }
-    bool chk_in_naive(const Polygon&h, P p){
+    bool chk_in_naive(const Polygon&h,const P& p){
         // strictly inner
         int s = ccw(h[0],h[1],p);
         for(int i=1;i<size(h);i++){
